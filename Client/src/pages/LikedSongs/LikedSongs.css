@@ -1,0 +1,5 @@
+.LikedSongs{
+    position: relative;
+    display: grid;
+    grid-template-columns: 19% 81%; 
+}
