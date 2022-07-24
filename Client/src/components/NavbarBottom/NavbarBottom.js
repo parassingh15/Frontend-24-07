@@ -77,9 +77,8 @@ function deletePlaylist(id) {
       {playlist.map((playlist) => (
         <div className="Playlists">
         <div style={{display: "flex"}} className="playlist-list">
-          <h4 onClick={() => navigate(`/playlist/${playlist._id}`)}>{playlist.playlistName}<i class="fa-solid fa-minus" id="delete" onClick={deletePlaylist.bind(this,playlist._id)}  style={{marginTop: "5px", position: "relative", right: "-10%", }}></i>
-        
-          </h4>
+          <h4 onClick={() => navigate(`/playlist/${playlist._id}`)}>{playlist.playlistName}</h4>
+          <i class="fa-solid fa-minus" id="delete" onClick={deletePlaylist.bind(this,playlist._id)}  style={{marginTop: "5px", position: "relative", right: "-10%"}}></i>
           </div>
         <Outlet/>
       </div>

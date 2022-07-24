@@ -39,7 +39,16 @@ export default function LikedSongLists() {
       });
   }, []);
 
+
+  function millisToMinutesAndSeconds(millis) {
+    var minutes = Math.floor(millis / 60000);
+    var seconds = ((millis % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+  }
+
   function removeLiked(id) {
+
+
     fetch(`https://likedapi.herokuapp.com/api/removeLiked/${id}`, {
       method: "DELETE",
       headers: {
@@ -112,17 +121,19 @@ export default function LikedSongLists() {
                   </React.Fragment>
                 }
               />
-              <FavoriteIcon
-                sx={{ marginRight: "20px", marginTop: "15px", color: "red" }}
-              />
-              <p style={{ marginRight: "20px", marginTop: "15px" }}> 3:12 </p>
-              <MoreHorizIcon sx={{ marginRight: "20px", marginTop: "15px" }} />
-
               <i
-                class="slider-component2_heart fa-solid fa-minus float-end text-end"
+                
+                class="fa-solid fa-heart"
+                style={{ marginRight: "20px", marginTop: "19px", color: "red", fontSize: "18px" }}
                 id="plus"
                 onClick={removeLiked.bind(this, item.id)}
               ></i>
+              {/* <FavoriteIcon
+                sx={{ marginRight: "20px", marginTop: "15px", color: "red" }}
+              /> */}
+              <p style={{ marginRight: "20px", marginTop: "15px" }}> {millisToMinutesAndSeconds(item.duration_ms)} </p>
+              <MoreHorizIcon sx={{ marginRight: "20px", marginTop: "15px" }} />
+
             </ListItem>
             <audio controls>
               <source src={item.preview_url} type="audio/mpeg" />
