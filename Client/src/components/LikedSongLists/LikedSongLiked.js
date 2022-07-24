@@ -1,6 +1,6 @@
-import React from 'react'
-import './LikedSongLists.css'
-import playlistImg from '../../img/playlist.jpg'
+import React, { useEffect } from "react";
+import "./LikedSongLists.css";
+import playlistImg from "../../img/playlist.jpg";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -11,67 +11,131 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
-import '../SliderComponent_2/SliderComponent_2.css'
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import "../SliderComponent_2/SliderComponent_2.css";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 
-import { CardActionArea } from '@mui/material';
+import { CardActionArea } from "@mui/material";
 
-
-
-import personalPlaylistImage from '../../img/personalplaylist.jpg'
+import personalPlaylistImage from "../../img/personalplaylist.jpg";
 
 import Typography from "@mui/material/Typography";
 
 export default function LikedSongLists() {
+  const [likedSong, setLikedSong] = React.useState([]);
 
-    const [likedSong, setLikedSong] = React.useState([]);
-    React.useEffect(() => {
-        // getLikedSong 
-        fetch('https://likedapi.herokuapp.com/api/getLikedSong', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'  
-            } 
-        }).then(res => res.json())  
-        .then(data => {console.log(data)  
-            setLikedSong(data);
-        } 
+  React.useEffect(() => {
+    // getLikedSong
+    fetch("https://likedapi.herokuapp.com/api/getLikedSong", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setLikedSong(data);
+      });
+  }, []);
 
-        );
-
-    }, []); 
-
-function removeLiked(id){
+  function removeLiked(id) {
     fetch(`https://likedapi.herokuapp.com/api/removeLiked/${id}`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }).then(res => res.json())
-        .then(data => {
-          console.log(data)
-          console.log("hello")
-            // filter data by spliceing the song
-            //use splice to remove the song from the playlist
-            console.log(id,"SongId")
-            likedSong[0]?.likedSong.map((song,index)=>{
-              console.log(song.id,"songs id")
-              if(song.id===id){
-                likedSong[0]?.likedSong.splice(index,1);
-                
-              }
-
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // filter data by spliceing the song
+        //use splice to remove the song from the playlist
+        console.log(id, "SongId");
+        likedSong[0]?.likedSong.map((song, index) => {
+          console.log(song.id, "songs id");
+          if (song.id === id) {
+            likedSong[0]?.likedSong.splice(index, 1);
           }
-          );
-
-      }
+        });
+      })
+      .then(
+        fetch("https://likedapi.herokuapp.com/api/getLikedSong", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            setLikedSong(data);
+          })
       );
-}
-
+  }
 
   return (
-    <div className='LikedSongCards'>
+    <div className="LikedSongCards">
+      <div className="LikedSongHead">
+        <img className="playlistImg" src={playlistImg} alt="" />
+        <h1
+          className="LikedName"
+          style={{ fontFamily: "Open Sans", fontSiz: "16px" }}
+        >
+          Liked Songs
+        </h1>
+      </div>
+      {likedSong[0]?.likedSong.map((item) => (
+        <div className="liked-songs-lists">
+          <List
+            sx={{
+              width: "98%",
+              background: "linear-gradient(315deg, #b1bfd8 0%, #6782b4 74%)",
+              borderRadius: "8px",
+            }}
+          >
+            <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar alt={item.name} src="/static/images/avatar/1.jpg" />
+              </ListItemAvatar>
+              <ListItemText
+                primary={item.name}
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      sx={{ display: "inline" }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      {item.artists.name}
+                    </Typography>
+                  </React.Fragment>
+                }
+              />
+              <FavoriteIcon
+                sx={{ marginRight: "20px", marginTop: "15px", color: "red" }}
+              />
+              <p style={{ marginRight: "20px", marginTop: "15px" }}> 3:12 </p>
+              <MoreHorizIcon sx={{ marginRight: "20px", marginTop: "15px" }} />
+
+              <i
+                class="slider-component2_heart fa-solid fa-minus float-end text-end"
+                id="plus"
+                onClick={removeLiked.bind(this, item.id)}
+              ></i>
+            </ListItem>
+            <audio controls>
+              <source src={item.preview_url} type="audio/mpeg" />
+            </audio>
+          </List>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+{
+  /* <div className='LikedSongCards'>
         <div className="LikedSongHead">
             <img className='playlistImg' src={playlistImg} alt="" />
             <h1 className='LikedName' style={{fontFamily: "Open Sans", fontSiz: "16px"}}>Liked Songs</h1>
@@ -116,7 +180,5 @@ function removeLiked(id){
         </div>)}
 
       </div>
-    </div>
-        
-  )
+    </div> */
 }

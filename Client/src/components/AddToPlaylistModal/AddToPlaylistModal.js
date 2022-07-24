@@ -54,7 +54,7 @@ fetch('https://muzixplaylist.herokuapp.com/api/getPlaylist', {
      .then(data => {console.log(data)
        });
  }
-  
+
 
   return (
     <div className="AddToPlaylistModal">
