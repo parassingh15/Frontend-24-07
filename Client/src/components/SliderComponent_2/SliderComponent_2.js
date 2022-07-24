@@ -23,6 +23,9 @@ export default function SliderComponent_2() {
     fetch("https://muzixcloud.herokuapp.com/api/GetTopArtist")
       .then(res => res.json())
       .then(data => {
+        //remove first item from array
+     
+
         setSongData(data.tracks);
         //console.log(data.tracks);
       }
