@@ -5,6 +5,7 @@ import { Modal} from "@mantine/core";
 import CreatePlayListModal from "../CreatePlayListModal/CreatePlayListModal";
 import { Link, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 
 
 export default function NavbarBottom() {
@@ -78,6 +79,7 @@ function deletePlaylist(id) {
         <div className="Playlists">
         <div style={{display: "flex"}} className="playlist-list">
           <h4 onClick={() => navigate(`/playlist/${playlist._id}`)}>{playlist.playlistName}</h4>
+          
           <i class="fa-solid fa-minus" id="delete" onClick={deletePlaylist.bind(this,playlist._id)}  style={{marginTop: "5px", position: "relative", right: "-10%"}}></i>
           </div>
         <Outlet/>

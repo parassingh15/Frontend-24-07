@@ -94,7 +94,7 @@ export default function LikedSongLists() {
         </h1>
       </div>
       {likedSong[0]?.likedSong.map((item) => (
-        <div className="liked-songs-lists">
+        <div className="liked-songs-lists" key={item.id}>
           <List
             sx={{
               width: "98%",
@@ -165,7 +165,6 @@ export default function LikedSongLists() {
            
           
             
-
             <CardContent >
               <Typography gutterBottom variant="h5" component="div">
                
@@ -174,22 +173,18 @@ export default function LikedSongLists() {
               <Typography variant="body2" color="text.secondary">
               {item.artists.name}
               
-
               <audio controls>
                 <source src={item.preview_url} type="audio/mpeg" />
               </audio>
-
               </Typography>
             </CardContent>
           </CardActionArea>
           <i class="slider-component2_heart fa-solid fa-minus float-end text-end" id="plus" onClick={removeLiked.bind(this,item.id)}></i>
-
           
           
           
         </Card>
         </div>)}
-
       </div>
     </div> */
 }
