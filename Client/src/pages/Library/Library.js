@@ -9,9 +9,9 @@ export default function Library() {
     <div className='Library'>
       <Navbar/>
       <LibraryPage/>
-        <footer>
+        {/* <footer>
           <MusicControl/>
-        </footer>
+        </footer> */}
     </div>
       
   )

@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import Login from "../../img/login.PNG";
 import AddToPlaylistModal from "../AddToPlaylistModal/AddToPlaylistModal";
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 export default function SliderComponent_5() {
   const [opened, setOpened] = useState(false);
@@ -55,10 +56,20 @@ export default function SliderComponent_5() {
                 </div>
               </CardContent>
             </CardActionArea>
-            <i
-              class="slider-component2_heart fa-solid fa-plus float-end text-end"
-              onClick={() => setOpened(true)}
-            ></i>
+            <PlaylistAddIcon
+                sx={{
+                  float: "right",
+                  position: "relative",
+                  bottom: "15px",
+                  fontSize: "30px",
+                  right: "5px",
+                  color: "darkGrey"
+                }}
+                onClick={() => {
+                  setOpened(true);
+                  setId(track.id);
+                }}
+              />
 
             <i class="slider-component2_heart fa-regular fa-heart float-end text-end"></i>
           </Card>
@@ -92,10 +103,20 @@ export default function SliderComponent_5() {
                 </div>
               </CardContent>
             </CardActionArea>
-            <i
-              class="slider-component2_heart fa-solid fa-plus float-end text-end"
-              onClick={() => setOpened(true)}
-            ></i>
+            <PlaylistAddIcon
+                sx={{
+                  float: "right",
+                  position: "relative",
+                  bottom: "15px",
+                  fontSize: "30px",
+                  right: "5px",
+                  color: "darkGrey"
+                }}
+                onClick={() => {
+                  setOpened(true);
+                  setId(track.id);
+                }}
+              />
 
             <i class="slider-component2_heart fa-regular fa-heart float-end text-end"></i>
           </Card>
@@ -129,10 +150,20 @@ export default function SliderComponent_5() {
                 </div>
               </CardContent>
             </CardActionArea>
-            <i
-              class="slider-component2_heart fa-solid fa-plus float-end text-end"
-              onClick={() => setOpened(true)}
-            ></i>
+            <PlaylistAddIcon
+                sx={{
+                  float: "right",
+                  position: "relative",
+                  bottom: "15px",
+                  fontSize: "30px",
+                  right: "5px",
+                  color: "darkGrey"
+                }}
+                onClick={() => {
+                  setOpened(true);
+                  setId(track.id);
+                }}
+              />
 
             <i class="slider-component2_heart fa-regular fa-heart float-end text-end"></i>
           </Card>
@@ -166,10 +197,20 @@ export default function SliderComponent_5() {
                 </div>
               </CardContent>
             </CardActionArea>
-            <i
-              class="slider-component2_heart fa-solid fa-plus float-end text-end"
-              onClick={() => setOpened(true)}
-            ></i>
+            <PlaylistAddIcon
+                sx={{
+                  float: "right",
+                  position: "relative",
+                  bottom: "15px",
+                  fontSize: "30px",
+                  right: "5px",
+                  color: "darkGrey"
+                }}
+                onClick={() => {
+                  setOpened(true);
+                  setId(track.id);
+                }}
+              />
 
             <i class="slider-component2_heart fa-regular fa-heart float-end text-end"></i>
           </Card>
@@ -203,10 +244,20 @@ export default function SliderComponent_5() {
                 </div>
               </CardContent>
             </CardActionArea>
-            <i
-              class="slider-component2_heart fa-solid fa-plus float-end text-end"
-              onClick={() => setOpened(true)}
-            ></i>
+            <PlaylistAddIcon
+                sx={{
+                  float: "right",
+                  position: "relative",
+                  bottom: "15px",
+                  fontSize: "30px",
+                  right: "5px",
+                  color: "darkGrey"
+                }}
+                onClick={() => {
+                  setOpened(true);
+                  setId(track.id);
+                }}
+              />
 
             <i class="slider-component2_heart fa-regular fa-heart float-end text-end"></i>
           </Card>
@@ -240,10 +291,20 @@ export default function SliderComponent_5() {
                 </div>
               </CardContent>
             </CardActionArea>
-            <i
-              class="slider-component2_heart fa-solid fa-plus float-end text-end"
-              onClick={() => setOpened(true)}
-            ></i>
+            <PlaylistAddIcon
+                sx={{
+                  float: "right",
+                  position: "relative",
+                  bottom: "15px",
+                  fontSize: "30px",
+                  right: "5px",
+                  color: "darkGrey"
+                }}
+                onClick={() => {
+                  setOpened(true);
+                  setId(track.id);
+                }}
+              />
 
             <i class="slider-component2_heart fa-regular fa-heart float-end text-end"></i>
           </Card>
@@ -277,10 +338,20 @@ export default function SliderComponent_5() {
                 </div>
               </CardContent>
             </CardActionArea>
-            <i
-              class="slider-component2_heart fa-solid fa-plus float-end text-end"
-              onClick={() => setOpened(true)}
-            ></i>
+            <PlaylistAddIcon
+                sx={{
+                  float: "right",
+                  position: "relative",
+                  bottom: "15px",
+                  fontSize: "30px",
+                  right: "5px",
+                  color: "darkGrey"
+                }}
+                onClick={() => {
+                  setOpened(true);
+                  setId(track.id);
+                }}
+              />
 
             <i class="slider-component2_heart fa-regular fa-heart float-end text-end"></i>
           </Card>
@@ -314,10 +385,20 @@ export default function SliderComponent_5() {
                 </div>
               </CardContent>
             </CardActionArea>
-            <i
-              class="slider-component2_heart fa-solid fa-plus float-end text-end"
-              onClick={() => setOpened(true)}
-            ></i>
+            <PlaylistAddIcon
+                sx={{
+                  float: "right",
+                  position: "relative",
+                  bottom: "15px",
+                  fontSize: "30px",
+                  right: "5px",
+                  color: "darkGrey"
+                }}
+                onClick={() => {
+                  setOpened(true);
+                  setId(track.id);
+                }}
+              />
 
             <i class="slider-component2_heart fa-regular fa-heart float-end text-end"></i>
           </Card>
@@ -351,10 +432,20 @@ export default function SliderComponent_5() {
                 </div>
               </CardContent>
             </CardActionArea>
-            <i
-              class="slider-component2_heart fa-solid fa-plus float-end text-end"
-              onClick={() => setOpened(true)}
-            ></i>
+            <PlaylistAddIcon
+                sx={{
+                  float: "right",
+                  position: "relative",
+                  bottom: "15px",
+                  fontSize: "30px",
+                  right: "5px",
+                  color: "darkGrey"
+                }}
+                onClick={() => {
+                  setOpened(true);
+                  setId(track.id);
+                }}
+              />
 
             <i class="slider-component2_heart fa-regular fa-heart float-end text-end"></i>
           </Card>
@@ -388,10 +479,20 @@ export default function SliderComponent_5() {
                 </div>
               </CardContent>
             </CardActionArea>
-            <i
-              class="slider-component2_heart fa-solid fa-plus float-end text-end"
-              onClick={() => setOpened(true)}
-            ></i>
+            <PlaylistAddIcon
+                sx={{
+                  float: "right",
+                  position: "relative",
+                  bottom: "15px",
+                  fontSize: "30px",
+                  right: "5px",
+                  color: "darkGrey"
+                }}
+                onClick={() => {
+                  setOpened(true);
+                  setId(track.id);
+                }}
+              />
 
             <i class="slider-component2_heart fa-regular fa-heart float-end text-end"></i>
           </Card>
@@ -425,10 +526,20 @@ export default function SliderComponent_5() {
                 </div>
               </CardContent>
             </CardActionArea>
-            <i
-              class="slider-component2_heart fa-solid fa-plus float-end text-end"
-              onClick={() => setOpened(true)}
-            ></i>
+            <PlaylistAddIcon
+                sx={{
+                  float: "right",
+                  position: "relative",
+                  bottom: "15px",
+                  fontSize: "30px",
+                  right: "5px",
+                  color: "darkGrey"
+                }}
+                onClick={() => {
+                  setOpened(true);
+                  setId(track.id);
+                }}
+              />
 
             <i class="slider-component2_heart fa-regular fa-heart float-end text-end"></i>
           </Card>
@@ -462,10 +573,20 @@ export default function SliderComponent_5() {
                 </div>
               </CardContent>
             </CardActionArea>
-            <i
-              class="slider-component2_heart fa-solid fa-plus float-end text-end"
-              onClick={() => setOpened(true)}
-            ></i>
+            <PlaylistAddIcon
+                sx={{
+                  float: "right",
+                  position: "relative",
+                  bottom: "15px",
+                  fontSize: "30px",
+                  right: "5px",
+                  color: "darkGrey"
+                }}
+                onClick={() => {
+                  setOpened(true);
+                  setId(track.id);
+                }}
+              />
 
             <i class="slider-component2_heart fa-regular fa-heart float-end text-end"></i>
           </Card>

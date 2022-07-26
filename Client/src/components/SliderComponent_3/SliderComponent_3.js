@@ -9,6 +9,7 @@ import { Modal } from "@mantine/core";
 import { CardActionArea } from "@mui/material";
 import Login from "../../img/login.PNG";
 import AddToPlaylistModal from "../AddToPlaylistModal/AddToPlaylistModal";
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 export default function SliderComponent_2() {
   const [opened, setOpened] = useState(false);
@@ -106,14 +107,20 @@ export default function SliderComponent_2() {
                   </Typography>
                 </CardContent>
               </CardActionArea>
-              <i
-                class="slider-component2_heart fa-solid fa-plus float-end text-end"
-                id="plus"
+              <PlaylistAddIcon
+                sx={{
+                  float: "right",
+                  position: "relative",
+                  bottom: "15px",
+                  fontSize: "30px",
+                  right: "5px",
+                  color: "darkGrey"
+                }}
                 onClick={() => {
                   setOpened(true);
                   setId(track.id);
                 }}
-              ></i>
+              />
 
               <i
                 id="heart"

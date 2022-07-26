@@ -10,9 +10,9 @@ export default function Search() {
     <div className='Search'>
         <Navbar/>
         <SearchPage/>
-        <footer>
+        {/* <footer>
           <MusicControl/>
-        </footer>
+        </footer> */}
     </div>
   )
 }

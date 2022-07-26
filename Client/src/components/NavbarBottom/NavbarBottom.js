@@ -9,8 +9,9 @@ import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 
 
 export default function NavbarBottom() {
-  let navigate = useNavigate();
   
+  let navigate = useNavigate();
+
   const [opened, setOpened] = useState(false);
   //playlist state
   const [playlist, setPlaylist] = useState([]);
@@ -62,17 +63,16 @@ function deletePlaylist(id) {
           <i className="navTop-icon fa-solid fa-square-plus"></i>Create Playlist
         </h4>
       </div>
-      <Link to="/liked" style={{textDecoration: "none", color: "white" }}>
-      <div className=" NavIcon LikedSongs" style={{display: "inline-flex"}}>
       
-        <h4>
+      <div className=" NavIcon " style={{display: "inline-flex"}}>
+        <h4 onClick={()=> navigate('/liked')}>
         <i className="navTop-icon fa-hart fa-solid fa-heart"></i>
         Liked Songs
         </h4>
        
         
       </div>
-      </Link>
+      
       <div className="LastLine"></div>
 
       {playlist.map((playlist) => (

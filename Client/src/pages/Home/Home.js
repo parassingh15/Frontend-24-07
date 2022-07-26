@@ -9,9 +9,9 @@ export default function Home() {
     <div className='Home'>
         <Navbar/>
         <LandingPage/>
-        <footer>
+        {/* <footer>
           <MusicControl/>
-        </footer>
+        </footer> */}
     </div>
   )
 }

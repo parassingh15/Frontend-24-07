@@ -5,6 +5,8 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 export default function AddToPlaylistModal(props) {
@@ -52,6 +54,9 @@ fetch('https://muzixplaylist.herokuapp.com/api/getPlaylist', {
      })
    }).then(res => res.json())
      .then(data => {console.log(data)
+      document.getElementById('alert').classList.add("alert-appear");
+      document.getElementById('alert').classList.remove("alert-box");
+    
        });
  }
 
@@ -95,6 +100,14 @@ fetch('https://muzixplaylist.herokuapp.com/api/getPlaylist', {
       sx={{float: "right", right: "10%", top: 5}}>
         Add
       </Button>
+
+      <div id="alert" className='alert-box'>
+        <Alert severity="success"
+        sx={{marginTop: '60px'}}>
+        <AlertTitle>Success</AlertTitle>
+         Playlist Created! — <strong>check it out!</strong>
+      </Alert>
+        </div>
     </div>
   );
 }

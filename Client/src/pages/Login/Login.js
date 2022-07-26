@@ -3,6 +3,7 @@ import "./Login.css";
 
 import login from "../../img/login.PNG";
 import signup from "../../img/signup.png";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [signUp, setSignUp] = useState({
@@ -83,9 +84,11 @@ export default function Login() {
               <i className="fas fa-lock"></i>
               <input type="password" placeholder="Password" />
             </div>
+            <Link to='/home'>
             <button type="submit" className="btn solid">
               Login
             </button>
+            </Link>
             <p className="social-text">Or Sign in with social Platforms</p>
             <div className="social-media">
               <a href="#" className="social-icon">

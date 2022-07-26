@@ -3,11 +3,10 @@ import { useState } from "react";
 import "./SliderComponent_2.css";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Modal } from "@mantine/core";
 import { CardActionArea } from "@mui/material";
-import Login from "../../img/login.PNG";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import AddToPlaylistModal from "../AddToPlaylistModal/AddToPlaylistModal";
 
 export default function SliderComponent_2() {
@@ -44,6 +43,7 @@ export default function SliderComponent_2() {
         console.log(data);
 
         document.getElementById(heart).classList.add("fa-solid");
+       // document.getElementById(heart).classList.remove("fa-solid");
       });
   }
 
@@ -84,13 +84,12 @@ export default function SliderComponent_2() {
                     variant="h5"
                     component="div"
                     sx={{
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      color: "darkGrey"
-                        
-      
-                    }}>
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      color: "darkGrey",
+                    }}
+                  >
                     {track.name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
@@ -101,14 +100,30 @@ export default function SliderComponent_2() {
                   </Typography>
                 </CardContent>
               </CardActionArea>
-              <i
+              {/* <i
                 class="slider-component2_heart fa-solid fa-plus float-end text-end"
-                id="plus"
+                id="plus" 
                 onClick={() => {
                   setOpened(true);
                   setId(track.id);
                 }}
-              ></i>
+
+              ></i> */}
+
+              <PlaylistAddIcon
+                sx={{
+                  float: "right",
+                  position: "relative",
+                  bottom: "15px",
+                  fontSize: "30px",
+                  right: "5px",
+                  color: "darkGrey"
+                }}
+                onClick={() => {
+                  setOpened(true);
+                  setId(track.id);
+                }}
+              />
 
               <i
                 id="heart"

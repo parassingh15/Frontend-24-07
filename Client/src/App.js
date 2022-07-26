@@ -11,10 +11,13 @@ import Playlist from './pages/Playlist/Playlist';
 function App() {
   return (
     <div className="App">
-      {/* <Login/> */}
+      
       <BrowserRouter>
+
       <Routes>
-      <Route path="/" element={<Home />} />
+      
+      <Route path="/" element={<Login />} />
+      {/* <Route path="/" element={<Home />} /> */}
       <Route path="/home" element={<Home />} />
       <Route path="/search" element={<Search/>} />
       <Route path="/liked" element={<LikedSongs/>} />

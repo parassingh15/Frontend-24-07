@@ -9,9 +9,9 @@ export default function LikedSongs() {
     <div className='LikedSongs'>
         <Navbar/>
         <LikedPage/>
-        <footer>
+        {/* <footer>
           <MusicControl/>
-        </footer>
+        </footer> */}
     </div>
   )
 }
