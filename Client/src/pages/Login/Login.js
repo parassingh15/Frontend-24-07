@@ -1,11 +1,20 @@
 import React, { useState } from "react";
 import "./Login.css";
-
+import { useNavigate } from "react-router-dom";
 import login from "../../img/login.PNG";
 import signup from "../../img/signup.png";
-import { Link } from "react-router-dom";
+import config from "../../config";
+
+import Alert from "@mui/material/Alert";
+
+import * as yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useFormik } from "formik";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const [signUp, setSignUp] = useState({
     username: "",
     email: "",
@@ -13,8 +22,14 @@ export default function Login() {
     confirmPassword: "",
   });
 
+  const [loginUser, setLoginUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  // handle inputs
   let name, value;
-  const handleInputs = (e) => {
+  const handleRegisterInputs = (e) => {
     console.log(e);
     name = e.target.name;
     value = e.target.value;
@@ -22,12 +37,83 @@ export default function Login() {
     setSignUp({ ...signUp, [name]: value });
   };
 
-  const PostData = async (e) => {
-    e.prevent.Default();
-    
-    const { username, email, password, confirmPassword } = user;
+  const handleLoginInputs = (e) => {
+    console.log(e);
+    name = e.target.name;
+    value = e.target.value;
 
-    const res = await fetch("localhost://5000/api/register", {
+    setLoginUser({ ...loginUser, [name]: value });
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    onSubmit: (values) => {
+      const username = values.username;
+      const email = values.email;
+      const password = values.password;
+
+      const res = fetch(config.apiRegisterUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+        }),
+      });
+
+      alert(`${username} registered`)
+ 
+
+    },
+
+    validationSchema: yup.object().shape({
+      username: yup
+        .string()
+        .min(3, "Username is too short")
+        .max(10, "Username is too long")
+        .required("Username cannot be left blank"),
+      email: yup
+        .string()
+        .email("Invalid Email Address")
+        .required("Email cannot be left blank"),
+      password: yup
+        .string()
+        .required("Password cannot be left blank")
+
+        .matches(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+          "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+        ),
+
+      confirmPassword: yup
+        .string()
+        .required("Confirm Password cannot be left blank")
+        .test(
+          "confirmPassword",
+          "Password & confirm password should be same",
+          function (confirmpass) {
+            if (this.parent.password === confirmpass) {
+              return true;
+            }
+            return false;
+          }
+        ),
+    }),
+  });
+
+  // connecting to backend
+  const RegisterData = async (e) => {
+    const { username, email, password } = signUp;
+
+    const res = await fetch(config.apiRegisterUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,17 +122,42 @@ export default function Login() {
         username,
         email,
         password,
-        confirmPassword,
       }),
     });
 
     const data = await res.json();
-    if (res.status === 422 || !data) {
-      window.alert("Invalid Registration");
-      console.log("Invalid Register");
+    if (data.status === 409) {
+      window.alert("User already exists");
+    } else if (data.status === 200) {
+      window.alert("User registered successfully");
     } else {
-      window.alert("Success Registration");
-      console.log("Succuss Register");
+      window.alert("Registration failed");
+    }
+  };
+
+  const UserLogin = async (e) => {
+    const { email, password } = loginUser;
+
+    const res = await fetch(config.apiLoginUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    const loginData = await res.json();
+    console.log(loginData);
+    if (loginData.status === 200) {
+      window.alert("logged in successfully");
+      navigate("/home");
+    } else if (loginData.status === 401) {
+      window.alert(
+        "You are not authorized. Please check your email and password."
+      );
     }
   };
 
@@ -68,27 +179,57 @@ export default function Login() {
     document.getElementById("panel").classList.add("right-panel2");
   };
 
+  const difftoast = (responseMsg) => {
+    let popUpText =
+      responseMsg === "already exist"
+        ? "Email id already exist"
+        : "Registration Successfull";
+    toast.success(popUpText, {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   return (
     <div className="container" id="container">
       <div className="forms-container">
         {/* LOGIN FORM */}
 
         <div className="signin-signup" id="signin">
-          <form action="#" className="sign-in-form">
+          <form method="POST" className="sign-in-form">
             <h2 className="title">Sign In</h2>
             <div className="input-field">
               <i className="fas fa-user"></i>
-              <input type="text" placeholder="Username" />
+              <input
+                key="email"
+                id="email"
+                name="email"
+                type="text"
+                placeholder="Email"
+                value={loginUser.email}
+                onChange={handleLoginInputs}
+              />
             </div>
             <div className="input-field">
               <i className="fas fa-lock"></i>
-              <input type="password" placeholder="Password" />
+              <input
+                id="password"
+                key="password"
+                name="password"
+                type="password"
+                placeholder="Password"
+                value={loginUser.password}
+                onChange={handleLoginInputs}
+              />
             </div>
-            <Link to='/home'>
-            <button type="submit" className="btn solid">
+            <button type="button" className="btn solid" onClick={UserLogin}>
               Login
             </button>
-            </Link>
             <p className="social-text">Or Sign in with social Platforms</p>
             <div className="social-media">
               <a href="#" className="social-icon">
@@ -107,54 +248,111 @@ export default function Login() {
         {/* SIGN UP FORM */}
 
         <div className="signup-signup" id="signup">
-          <form method="post" action="" className="sign-up-form">
+
+          <form
+            method="post"
+            className="sign-up-form"
+            onSubmit={formik.handleSubmit}
+          >
             <h2 className="title">Sign Up</h2>
             <div className="input-field">
               <i className="fas fa-user"></i>
               <input
-                type="text"
-                placeholder="Username"
-                name="username"
+                key="username"
                 id="username"
-                value={signUp.username}
-                onChange={handleInputs}
+                name="username"
+                type="text"
+                value={formik.values.username}
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                placeholder="Username"
+                //value={signUp.username}
+                //onChange={handleRegisterInputs}
               />
             </div>
+            {formik.errors.username && formik.touched.username ? (
+              <div
+                className="warning"
+                style={{ color: "red", fontSize: "12px" }}
+              >
+                {formik.errors.username}
+              </div>
+            ) : null}
+
             <div className="input-field">
               <i className="fas fa-envelope"></i>
               <input
-                type="email"
-                placeholder="Email"
-                name="email"
+                key="email"
                 id="email"
-                value={signUp.email}
-                onChange={handleInputs}
+                name="email"
+                type="email"
+                value={formik.values.email}
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                placeholder="Email"
+                //value={signUp.email}
+                //onChange={handleRegisterInputs}
               />
             </div>
+            {formik.errors.email && formik.touched.email ? (
+              <div
+                className="warning"
+                style={{ color: "red", fontSize: "12px" }}
+              >
+                {formik.errors.email}
+              </div>
+            ) : null}
             <div className="input-field">
               <i className="fas fa-lock"></i>
               <input
+                key="password"
+                id="password"
+                name="password"
                 type="password"
                 placeholder="Password"
-                name="password"
-                id="password"
-                value={signUp.password}
-                onChange={handleInputs}
+                value={formik.values.password}
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                //value={signUp.password}
+                //onChange={handleRegisterInputs}
               />
             </div>
+            {formik.errors.password && formik.touched.password ? (
+              <div
+                className="warning"
+                style={{ color: "red", width: "300px", fontSize: "12px" }}
+              >
+                {formik.errors.password}
+              </div>
+            ) : null}
             <div className="input-field">
               <i className="fas fa-lock"></i>
               <input
-                type="password"
-                placeholder="Confirm Password"
-                name="confirmPassword"
+                key="confirmPassword"
                 id="confirmPassword"
-                value={signUp.confirmPassword}
-                onChange={handleInputs}
+                name="confirmPassword"
+                type="password"
+                value={formik.values.confirmPassword}
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                placeholder="Confirm Password"
+                //value={signUp.confirmPassword}
+                //onChange={handleRegisterInputs}
               />
             </div>
-            <button type="submit" className="btn solid" onClick={PostData}>
-              Sign Up
+            {formik.errors.confirmPassword && formik.touched.confirmPassword ? (
+              <div
+                className="warning"
+                style={{ color: "red", fontSize: "12px" }}
+              >
+                {formik.errors.confirmPassword}
+              </div>
+            ) : null}
+            <button
+              type="submit"
+              className="btn solid" /* onClick={RegisterData} */
+            >
+              Register
             </button>
             <p className="social-text">Or Sign Up with social Platforms</p>
             <div className="social-media">

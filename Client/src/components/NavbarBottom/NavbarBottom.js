@@ -7,7 +7,6 @@ import { Link, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 
-
 export default function NavbarBottom() {
   
   let navigate = useNavigate();
