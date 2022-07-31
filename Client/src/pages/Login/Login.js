@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import "./Login.css";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+import { useHref, useNavigate } from "react-router-dom";
 import login from "../../img/login.PNG";
 import signup from "../../img/signup.png";
 import config from "../../config";
-
-import Alert from "@mui/material/Alert";
-
 import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -52,7 +51,7 @@ export default function Login() {
       password: "",
       confirmPassword: "",
     },
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       const username = values.username;
       const email = values.email;
       const password = values.password;
@@ -68,10 +67,8 @@ export default function Login() {
           password,
         }),
       });
-
-      alert(`${username} registered`)
- 
-
+      alert(`${username} registered`);
+      
     },
 
     validationSchema: yup.object().shape({
@@ -130,6 +127,7 @@ export default function Login() {
       window.alert("User already exists");
     } else if (data.status === 200) {
       window.alert("User registered successfully");
+    
     } else {
       window.alert("Registration failed");
     }
@@ -151,9 +149,10 @@ export default function Login() {
 
     const loginData = await res.json();
     console.log(loginData);
+
     if (loginData.status === 200) {
       window.alert("logged in successfully");
-      navigate("/home");
+      onClick = { signInButton };
     } else if (loginData.status === 401) {
       window.alert(
         "You are not authorized. Please check your email and password."
@@ -248,7 +247,6 @@ export default function Login() {
         {/* SIGN UP FORM */}
 
         <div className="signup-signup" id="signup">
-
           <form
             method="post"
             className="sign-up-form"
