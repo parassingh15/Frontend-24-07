@@ -69,6 +69,9 @@ export default function SliderComponent_2() {
                 backgroundColor: "#485461",
                 backgroundImage:
                   "linear-gradient(315deg, #485461 0%, #28313b 74%)",
+                  width: '300px',
+                  marginLeft: 0,
+                  marginRight: 0,
               }}
             >
               <CardActionArea>
@@ -94,7 +97,7 @@ export default function SliderComponent_2() {
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     {track.artists.name}
-                    <audio controls>
+                    <audio controls className="Audio">
                       <source src={track.preview_url} type="audio/mpeg" />
                     </audio>
                   </Typography>

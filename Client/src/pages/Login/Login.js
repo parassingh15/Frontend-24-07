@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
 import axios from "axios";
-
+import Alert from '@mui/material/Alert';
 import { useHref, useNavigate } from "react-router-dom";
 import login from "../../img/login.PNG";
 import signup from "../../img/signup.png";
@@ -13,6 +13,8 @@ import { useFormik } from "formik";
 
 export default function Login() {
   const navigate = useNavigate();
+
+  let User = ''
 
   const [signUp, setSignUp] = useState({
     username: "",
@@ -148,15 +150,25 @@ export default function Login() {
     });
 
     const loginData = await res.json();
-    console.log(loginData);
 
     if (loginData.status === 200) {
-      window.alert("logged in successfully");
-      onClick = { signInButton };
-    } else if (loginData.status === 401) {
-      window.alert(
+      /* window.alert("logged in successfully");
+      onClick = { signInButton }; */
+      document.getElementById('LoginAlertSuccess').classList.remove('loginSuccessalert')
+      document.getElementById('LoginAlertSuccess').classList.add('loginSuccessalertdisplay')
+      document.getElementById('LoginAlertFailed').classList.add('loginFailedalert')
+      document.getElementById('LoginAlertFailed').classList.remove('loginFailedalertdisplay')
+
+      navigate('/home')
+    } else {
+      /* alert(
         "You are not authorized. Please check your email and password."
-      );
+      ); */
+      document.getElementById('LoginAlertFailed').classList.remove('loginFailedalert')
+      document.getElementById('LoginAlertFailed').classList.add('loginFailedalertdisplay')
+      
+      document.getElementById('LoginAlertSuccess').classList.add('loginSuccessalert')
+      document.getElementById('LoginAlertSuccess').classList.remove('loginSuccessalertdisplay')
     }
   };
 
@@ -202,6 +214,15 @@ export default function Login() {
         <div className="signin-signup" id="signin">
           <form method="POST" className="sign-in-form">
             <h2 className="title">Sign In</h2>
+
+            <div className="loginFailedalert" id="LoginAlertFailed">
+            <Alert severity="error">You are not authorized. Please check your email and password.</Alert>
+            </div>
+
+            <div className="loginSuccessalert" id="LoginAlertSuccess">
+            <Alert severity="success">Logged in Successfully</Alert>
+            </div>
+
             <div className="input-field">
               <i className="fas fa-user"></i>
               <input

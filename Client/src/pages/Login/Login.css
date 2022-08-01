@@ -331,6 +331,22 @@ form.sign-up-form {
     opacity: 1;
 }
 
+.loginSuccessalert{
+    display: none;
+}
+
+.loginFailedalert{
+    display: none;
+}
+
+.loginSuccessalertdisplay{
+    display: block;
+}
+
+.loginFailedalertdisplay{
+    display: block;
+}
+
 
 
 

@@ -9,3 +9,11 @@
 .LibraryPage::-webkit-scrollbar{
     display: none;
 }
+
+@media screen and (max-width: 750px) {
+    .LibraryPage {
+      height: 94vh;
+    
+
+    }
+  }

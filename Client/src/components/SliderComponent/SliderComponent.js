@@ -26,8 +26,8 @@ export default function SliderComponent() {
       </h2>
       <div className="Sub-SliderComponent">
         {SongData.map((Song) => (
-          <div className="card">
-            <Card
+          <div className="card" key={Song.id}>
+            {/* <Card
               sx={{
                 backgroundColor: "#485461",
 
@@ -65,7 +65,30 @@ export default function SliderComponent() {
                   </Typography>
                 </CardContent>
               </CardActionArea>
-            </Card>
+            </Card> */}
+            <div className="LikedSongHead">
+        <img className="playlistImg" src={Song.images[1].url} alt="" />
+        <div className="SliderComponentOneNameDiv">
+        <h1
+          className="LikedName"
+          style={{ fontFamily: "Open Sans", fontSiz: "16px" }}
+        >
+          {Song.name}
+        </h1>
+        <h3
+          className="LikedName"
+          style={{ fontFamily: "Open Sans", fontSiz: "16px" }}
+        >
+         {Song.artists[0].name}
+        </h3>
+
+        {/* <audio controls className="Audio">
+                      <source src={Song.preview_url} type="audio/mpeg" />
+                    </audio> */}
+
+        </div>
+        
+      </div>
           </div>
         ))}
       </div>

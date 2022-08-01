@@ -79,7 +79,7 @@ function deletePlaylist(id) {
         <div style={{display: "flex"}} className="playlist-list">
           <h4 onClick={() => navigate(`/playlist/${playlist._id}`)}>{playlist.playlistName}</h4>
           
-          <i class="fa-solid fa-minus" id="delete" onClick={deletePlaylist.bind(this,playlist._id)}  style={{marginTop: "5px", position: "relative", right: "-10%"}}></i>
+          <i class="fa-solid fa-minus" id="delete" onClick={deletePlaylist.bind(this,playlist._id)}  style={{marginTop: "5px", position: "relative", right: "-6%"}}></i>
           </div>
         <Outlet/>
       </div>

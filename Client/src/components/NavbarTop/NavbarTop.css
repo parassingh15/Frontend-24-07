@@ -18,3 +18,13 @@
 Link{
     text-decoration: none;
 }
+
+@media screen and (max-width: 750px) {
+    .NavbarTop{
+        display: flex;
+        flex-direction: row;
+        margin: 5px;
+        justify-content: space-around;
+  }
+
+}

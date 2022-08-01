@@ -10,3 +10,10 @@
 .SongContent::-webkit-scrollbar{
     display: none;
 }
+
+@media screen and (max-width: 750px) {
+    .SongContent{
+        height: 100vh;
+        margin-bottom: 0;
+  }
+}
