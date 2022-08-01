@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
 import axios from "axios";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 import { useHref, useNavigate } from "react-router-dom";
 import login from "../../img/login.PNG";
 import signup from "../../img/signup.png";
@@ -14,7 +14,7 @@ import { useFormik } from "formik";
 export default function Login() {
   const navigate = useNavigate();
 
-  let User = ''
+  let User = "";
 
   const [signUp, setSignUp] = useState({
     username: "",
@@ -70,14 +70,13 @@ export default function Login() {
         }),
       });
       alert(`${username} registered`);
-      
     },
 
     validationSchema: yup.object().shape({
       username: yup
         .string()
         .min(3, "Username is too short")
-        .max(10, "Username is too long")
+        .max(12, "Username is too long")
         .required("Username cannot be left blank"),
       email: yup
         .string()
@@ -129,7 +128,6 @@ export default function Login() {
       window.alert("User already exists");
     } else if (data.status === 200) {
       window.alert("User registered successfully");
-    
     } else {
       window.alert("Registration failed");
     }
@@ -154,21 +152,37 @@ export default function Login() {
     if (loginData.status === 200) {
       /* window.alert("logged in successfully");
       onClick = { signInButton }; */
-      document.getElementById('LoginAlertSuccess').classList.remove('loginSuccessalert')
-      document.getElementById('LoginAlertSuccess').classList.add('loginSuccessalertdisplay')
-      document.getElementById('LoginAlertFailed').classList.add('loginFailedalert')
-      document.getElementById('LoginAlertFailed').classList.remove('loginFailedalertdisplay')
+      document
+        .getElementById("LoginAlertSuccess")
+        .classList.remove("loginSuccessalert");
+      document
+        .getElementById("LoginAlertSuccess")
+        .classList.add("loginSuccessalertdisplay");
+      document
+        .getElementById("LoginAlertFailed")
+        .classList.add("loginFailedalert");
+      document
+        .getElementById("LoginAlertFailed")
+        .classList.remove("loginFailedalertdisplay");
 
-      navigate('/home')
+      navigate("/home");
     } else {
       /* alert(
         "You are not authorized. Please check your email and password."
       ); */
-      document.getElementById('LoginAlertFailed').classList.remove('loginFailedalert')
-      document.getElementById('LoginAlertFailed').classList.add('loginFailedalertdisplay')
-      
-      document.getElementById('LoginAlertSuccess').classList.add('loginSuccessalert')
-      document.getElementById('LoginAlertSuccess').classList.remove('loginSuccessalertdisplay')
+      document
+        .getElementById("LoginAlertFailed")
+        .classList.remove("loginFailedalert");
+      document
+        .getElementById("LoginAlertFailed")
+        .classList.add("loginFailedalertdisplay");
+
+      document
+        .getElementById("LoginAlertSuccess")
+        .classList.add("loginSuccessalert");
+      document
+        .getElementById("LoginAlertSuccess")
+        .classList.remove("loginSuccessalertdisplay");
     }
   };
 
@@ -216,11 +230,13 @@ export default function Login() {
             <h2 className="title">Sign In</h2>
 
             <div className="loginFailedalert" id="LoginAlertFailed">
-            <Alert severity="error">You are not authorized. Please check your email and password.</Alert>
+              <Alert severity="error">
+                You are not authorized. Please check your email and password.
+              </Alert>
             </div>
 
             <div className="loginSuccessalert" id="LoginAlertSuccess">
-            <Alert severity="success">Logged in Successfully</Alert>
+              <Alert severity="success">Logged in Successfully</Alert>
             </div>
 
             <div className="input-field">

@@ -12,7 +12,7 @@ import Login from "../../img/login.PNG";
 import AddToPlaylistModal from "../AddToPlaylistModal/AddToPlaylistModal";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
-export default function SliderComponent_4() {
+export default function SliderComponent_4() {/* 
   const [opened, setOpened] = useState(false);
 
   return (
@@ -420,5 +420,5 @@ export default function SliderComponent_4() {
         </div>
       </div>
     </div>
-  );
+  ); */
 }
