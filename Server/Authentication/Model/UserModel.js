@@ -1,13 +1,8 @@
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
-const SECRET_KEY = "this is y secret key for jwt";
-
+const validator = require('validator')
+const bcrypt = require('bcryptjs')
 
 const UserSchema = mongoose.Schema({
-    // _id:{
-    //     type: String,
-    //     require: true
-    // },
     username:{
         type: String,
         require: true
@@ -23,16 +18,54 @@ const UserSchema = mongoose.Schema({
 });
 
 
-// // generating Auth token
-// UserSchema.methods.generateAuthToken = async function (){
-//     try {
-//         let token1 = jwt.sign({_id: this._id}, SECRET_KEY);
-//         this.tokens = this.tokens.concat({token: token1});
-//         await this.save();
-//         return token1;
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
+// static signup method
+UserSchema.statics.signup = async function(username, email, password) {
+
+    // validation
+    if (!username || !email || !password) {
+      throw Error('All fields must be filled')
+    }
+    if (!validator.isEmail(email)) {
+      throw Error('Email not valid')
+    }
+    if (!validator.isStrongPassword(password)) {
+      throw Error('Password not strong enough')
+    }
+  
+    const exists = await this.findOne({ email })
+  
+    if (exists) {
+      throw Error('Email already in use')
+    }
+  
+    const salt = await bcrypt.genSalt(10)
+    const hash = await bcrypt.hash(password, salt)
+  
+    const user = await this.create({ username: username, email, password: hash })
+  
+    return user
+}
+
+// static login method
+UserSchema.statics.login = async function(email, password) {
+
+    if (!email || !password) {
+      throw Error('All fields must be filled')
+    }
+  
+    const user = await this.findOne({ email })
+    if (!user) {
+      throw Error('Incorrect email')
+    }
+  
+    const match = await bcrypt.compare(password, user.password)
+    if (!match) {
+      throw Error('Incorrect password')
+    }
+  
+    return user
+  }
+  
+  
 
 module.exports = mongoose.model('UserModel', UserSchema, "Users")

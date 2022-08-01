@@ -24,19 +24,6 @@ function PassportAuth(){
     });
 }
 
-function GenerateToken(user_id){
-    return jwt.sign(user_id, SECRET_KEY, {expiresIn: "1h"});
-}
-
-function VerifyToken(token){
-    let result = jwt.verify(token, SECRET_KEY, (err, decode)=> decode !== undefined? decode : err);
-    if(result instanceof Error){
-        return false;
-    }
-    else{
-        return true;
-    }
-}
 
 // const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 
@@ -54,4 +41,4 @@ function VerifyToken(token){
 //     })
 // }
 
-module.exports = {PassportAuth, GenerateToken, VerifyToken, /*GoogleAuth*/}
+module.exports = {PassportAuth, /*GoogleAuth*/}

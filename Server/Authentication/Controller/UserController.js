@@ -1,67 +1,87 @@
-const { GenerateToken, VerifyToken } = require('../Auth/Auth');
 const UserModel = require("../Model/UserModel");
 const bcryptjs = require("bcryptjs");
 const repo = require("../Repository/UserRepository");
+const jwt = require("jsonwebtoken");
+const OtpModel = require("../Model/otpModel")
 
-const RegisterUser = (req, res)=>{
-    repo.RegisterUser(req.body).then(data=>{
-        res.status(200).send(data);
-    });
+function GenerateToken(user_id){
+    return jwt.sign({user_id}, process.env.SECRET, {expiresIn: "1h"});
 }
 
-const UserLogin = (req, res) => {
-    console.log(req.body.email, req.body.password);
-    repo.LoginUser(req.body.email, req.body.password).then(data => {
-        res.cookie("jwttoken", data.token, {
-            maxAge: 1000 * 60 * 15,
-            httpOnly: true,
-        })
-        res.status(200).send(data);
-    }).catch((err)=>{
-        res.send(err);
-    })
+const RegisterUser = async (req, res)=>{
+    const {username, email, password} = req.body;
+    try {
+        const user = await UserModel.signup(username, email, password)
+
+        // create a token
+        const token = GenerateToken(user._id)
+
+        res.status(200).json({email, token})
+        
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 }
 
-const UserLogout = (req, res) => {
-    repo.LogoutUser().then(()=>{
-        res.clearCookie("jwttoken");
-        res.redirect("/login");
-    });
+const UserLogin = async (req, res) => {
+    const {email, password} = req.body;
+
+    try {
+        const user = await UserModel.login(email, password);
+        // create a token
+        const token = GenerateToken(user._id);
+        res.status(200).json({status: 200, username: user.username, email, token})
+    } catch (error) {
+        res.status(400).json({error: error.message})   
+    }
 }
 
-const PasswordReset = (req, res)=>{
-    repo.ResetPassword(req.body.email, req.body.password).then(data=>{
-        res.status(200).send(data);
-    }).catch((data)=>{
-        res.send(data);
-    })
+const PasswordReset = async (req, res)=>{
+    let data = await OtpModel.find({email: req.body.email, code: req.body.otpCode});
+    if(data){
+        let currentTime = new Date().getTime();
+        let diff = data.expiresIn - currentTime;
+        if(diff < -5){
+            res.status(200).json({message: "OTP expired", success: false})
+        }else{
+            let user = await UserModel.findOne({email: req.body.email});
+            user.password = req.body.newPassword;
+            user.save();
+            res.status(200).json({message: "Password Changed successfully", success: true})
+        }
+    }
+    else{
+        res.status(200).json({message: "Invalid OTP", success: false})
+    }
+    // repo.ResetPassword(req.body.email, req.body.password).then(data=>{
+    //     res.status(200).send(data);
+    // }).catch((data)=>{
+    //     res.send(data);
+    // })
 }
 
 const SendMail = (req, res)=>{
     repo.SendMail(req.body.email, req.hostname).then(data => {
+        console.log(data)
         res.send(data)
     }).catch((data)=>{
         res.send(data);
     })
 }
 
-function TokenAuthentication(req, res) {
-    let token = req.params.token;
-    if (VerifyToken(token) === true) {
-        next();
-    } else {
-        res.status(401).send({ status: 401, message: "You are not authorized" });
-    }
+
+function GetUser(req, res) {
+    repo.GetUser(req.body.email).then(data => {
+        console.log(data)
+        res.status(201).send(data);
+        
+    })
+    ;
 }
+  
 
 
-function VerifyTokenMiddleware(req, res, next) {
-    let token = req.cookie.token;
-    if (VerifyToken(token) === true) {
-        next();
-    } else {
-        res.status(401).send({ status: 401, message: "You are not authorized" });
-    }
-}
 
-module.exports = {TokenAuthentication, VerifyTokenMiddleware, UserLogin, UserLogout, PasswordReset, SendMail, RegisterUser }
+
+
+module.exports = { UserLogin, PasswordReset, SendMail, RegisterUser, GetUser }

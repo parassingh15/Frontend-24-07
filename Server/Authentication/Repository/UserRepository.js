@@ -1,66 +1,11 @@
 const UserModel = require("../Model/UserModel");
 const bcryptjs = require("bcryptjs");
-const { GenerateToken } = require('../Auth/Auth');
-// const mail = require("../Sendmail/sendMail");
+const mail = require("../Sendmail/sendMail");
+const jwt = require("jsonwebtoken")
+const OtpModel = require("../Model/otpModel")
 
-function RegisterUser(user){
-    return new Promise((resolve, reject)=>{
-        console.log(user);
-        UserModel.findOne({email: user.email}, (err, data)=>{
-            if(data){
-                resolve({status: 409, message: "User with given email already exists."});
-            }
-            else if(!data){
-                let newUser = new UserModel({
-                    username: user.username,
-                    email: user.email,
-                    password: bcryptjs.hashSync(user.password, 10),
-                });
-    
-                newUser.save((err)=>{
-                    if(!err){
-                        resolve({status:200, message: "User added successfully."});
-                    }
-                    else{
-                        reject(err);
-                    }
-                });
-            }
-            else{
-                reject(err);
-            }
-        });
-    })
-}
-
-
-const LoginUser = (email, password) => {
-    return  new Promise(async (resolve, reject) => {
-        let user = await UserModel.findOne({email: email});
-
-        if(!user){
-            reject({status:404, message: "User not found", success: false});
-        }
-        if(user){
-            if(!bcryptjs.compareSync(password, user.password)){
-                reject({status: 402, message: "Invalid password", success: false})
-            }
-            else{
-                const token = GenerateToken({id: user._id});
-                resolve({
-                    status: 200, 
-                    token: token, 
-                    message: "User Login successfully."
-                });
-            }
-        }
-    })
-}
-
-const LogoutUser = ()=>{
-    return new Promise((resolve, reject) => {
-        resolve({ message: 'clear cookie' })
-    })
+function GenerateToken(user_id){
+    return jwt.sign({user_id}, process.env.SECRET, {expiresIn: "1h"});
 }
 
 const ResetPassword = (email, password)=>{
@@ -84,34 +29,42 @@ const SendMail = (email, hostname)=>{
         }
 
         if(user){
-            let token = GenerateToken({id: user._id, email: user.email});
-            let link = `http://${hostname}:8001/resetpassword/${user.email}/${token}`;
+            let otpCode = Math.floor(Math.random()*10000 + 1);
+            let otpData = new OtpModel({
+                email: email,
+                code: otpCode,
+                expiresIn: new Date().getTime() + 300*1000
+            })
+            // let token = GenerateToken({id: user._id, email: user.email});
+            // let link = `http://localhost:3000/resetpassword/${user.email}/${token}`;
+
+            let OtpResponse = await otpData.save();
             
-            let bool = await mail(link, user.email);
+            let bool = await mail(otpCode, user.email);
 
             if (bool) {
-                resolve({ message: "Link has been sent to your email id", success: true })
+                resolve({ message: "Otp has been sent to your email id", success: true })
             } else {
-                reject({ message: "Link coud not be sent to your email id", success: false })
+                reject({ message: "Otp coud not be sent to your email id", success: false })
             }
         }
     })
 }
 
-function GetUser(req, res){
-    UserModel.findOne({email: req.body.email}, (err, users)=>{
-        if(!err){
-            console.log(users)
-            res.status(200).send({userData: users});
-        }else{
-            throw err;
-        }
-    })
+function GetUser(email){
+    return new Promise((resolve, reject) => {
+        UserModel.findOne({email: email}, (err, data) => {
+            if (!err) {
+                console.log(data)
+                resolve(data);
+            } else {
+                reject(err);
+            }
+        });
+    });
 }
 
-
-
-module.exports = {RegisterUser, GetUser, LoginUser, LogoutUser, ResetPassword, SendMail}
+module.exports = {ResetPassword, SendMail, GetUser}
 
 
 

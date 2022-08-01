@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Login.css";
 import axios from "axios";
 import Alert from "@mui/material/Alert";
-import { useHref, useNavigate } from "react-router-dom";
+import { Link, useHref, useNavigate } from "react-router-dom";
 import login from "../../img/login.PNG";
 import signup from "../../img/signup.png";
 import config from "../../config";
@@ -13,8 +13,6 @@ import { useFormik } from "formik";
 
 export default function Login() {
   const navigate = useNavigate();
-
-  let User = "";
 
   const [signUp, setSignUp] = useState({
     username: "",
@@ -149,6 +147,8 @@ export default function Login() {
 
     const loginData = await res.json();
 
+    /* usernam = User.find(email); */
+
     if (loginData.status === 200) {
       /* window.alert("logged in successfully");
       onClick = { signInButton }; */
@@ -165,7 +165,10 @@ export default function Login() {
         .getElementById("LoginAlertFailed")
         .classList.remove("loginFailedalertdisplay");
 
-      navigate("/home");
+
+      
+
+      navigate(`/home/${email}`);
     } else {
       /* alert(
         "You are not authorized. Please check your email and password."
@@ -263,6 +266,17 @@ export default function Login() {
                 onChange={handleLoginInputs}
               />
             </div>
+
+            <div>
+              <Link
+                className="forgot-password-link"
+                to="/forgot-password"
+                style={{ color: "black" }}
+              >
+                Forgot your password?
+              </Link>
+            </div>
+
             <button type="button" className="btn solid" onClick={UserLogin}>
               Login
             </button>
