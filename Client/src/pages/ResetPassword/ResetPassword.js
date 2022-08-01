@@ -1,151 +1,131 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
-import axios from "axios";
-import "./ResetPassword.css";
+import React, {useState} from 'react'
+import { useNavigate } from 'react-router';
+import axios from "axios"
+import "./ResetPassword.css"
 
 export default function ResetPassword(props) {
-  const [inputField, setInputField] = useState({
-    otpCode: "",
-    newPassword: "",
-    cPassword: "",
-  });
+  // const [inputField, setInputField] = useState({
+  //   otpCode: "",
+  //   newPassword: "",
+  //   cPassword: ""
+  // })
+  const [otpCode, setOtpCode] = useState("")
+  const [newPassword, setNewPassworde] = useState("")
+  const [cPassword, setCPassword] = useState("")
   const naviagte = useNavigate();
 
   const [errField, setErrField] = useState({
     passwordErr: "",
     cPasswordErr: "",
-    otpCodeErr: "",
-  });
+    otpCodeErr: ""
+  })
 
-  const validForm = () => {
-    let FormIsValid = true;
+  const validForm = ()=>{
+    let FormIsValid = true
     setErrField({
       passwordErr: "",
       cPasswordErr: "",
-      otpCodeErr: "",
-    });
-
-    if (inputField.otpCode === "") {
+      otpCodeErr: ""
+    })
+    if(otpCode === ""){
       FormIsValid = false;
-      setErrField((prevState) => ({
-        ...prevState,
-        otpCodeErr: "please enter OTP",
-      }));
+      setErrField(prevState=>({
+        ...prevState, otpCodeErr: "please enter OTP"
+      }))
     }
-
-    if (inputField.newPassword === "") {
+    if(newPassword === ""){
       FormIsValid = false;
-      setErrField((prevState) => ({
-        ...prevState,
-        passwordErr: "please enter new password",
-      }));
+      setErrField(prevState=>({
+        ...prevState, passwordErr: "please enter new password"
+      }))
     }
-
-    if (
-      inputField.cPassword === "" ||
-      inputField.newPassword !== inputField.cPassword
-    ) {
+    if(cPassword === "" || newPassword !== cPassword){
       FormIsValid = false;
-      setErrField((prevState) => ({
-        ...prevState,
-        cPasswordErr: "please enter confirm password",
-      }));
+      setErrField(prevState=>({
+        ...prevState, cPasswordErr: "please enter confirm password"
+      }))
     }
-    return FormIsValid;
-  };
-  let name, value;
+    return FormIsValid
+  }
 
-  const handleChange = (e) => {
-    console.log(e);
-    name = e.target.name;
-    value = e.target.value;
-
-    setInputField({ inputField, [name]: value });
-  };
-
-  const UpdatePassword = async (e) => {
-    if (validForm()) {
-      console.log(inputField);
-      Object.assign(inputField, props);
-      const url = "http://localhost:8000/api/resetpassword";
+  const UpdatePassword = async (e)=>{
+    if(validForm()){
+      const url = "http://localhost:8000/api/resetpassword"
       let options = {
-        method: "POST",
+        method: 'POST',
         url: url,
-        data: inputField,
-      };
+        data: {
+          otpCode,
+          newPassword,
+          ...props
+        }
+      }
       try {
-        let res = await axios(options);
+        let res = await axios(options)
         const data = await res.data;
-        if (data.status == 200) {
+        console.log(data)
+        if(data.success){
           window.alert("Password updated successfully");
-          naviagte("/login");
-        } else {
+          naviagte("/login")
+        }
+        else{
           window.alert("Incorrect Email");
         }
       } catch (error) {
         window.alert("Something went wrong");
       }
     }
-  };
+
+
+  }
 
   return (
-    <div className="resetpassword">
-      <div className="text-container">Password Reset</div>
-      <div className="input-container">
-        <form className="resetForm" method="POST">
-          <label>Enter OTP Code</label>
-          <input
-            className="inputReset"
-            id="otpcode"
-            key="otpcode"
-            name="otpcode"
-            placeholder="Enter OTP Code"
-            type="text"
-            maxLength="4"
-            value={inputField.otpcode}
-            onChange={handleChange}
-            required
-          />
-          {errField.otpCodeErr.length > 0 && (
-            <div className="error">{errField.otpCodeErr}</div>
-          )}
+    <div className='resetpassword'>
+        <div className='text-container'>
+            Password Reset
+        </div>
+        <div className='input-container'>
+            <form method='POST'>
+                <label>Enter OTP Code</label>
+                <input 
+                    id='otpcode' 
+                    key="otpcode" 
+                    name='otpCode' 
+                    placeholder='Enter OTP Code' 
+                    type="text"
+                    maxLength="4"
+                    value={otpCode}
+                    onChange={(e)=>setOtpCode(e.target.value)}
+                    required/>
+                {errField.otpCodeErr.length > 0 && <div className='error' >{errField.otpCodeErr}</div>}
+            
+                <label>Enter new password</label>
+                <input 
+                    id='newpassword' 
+                    key="newpassword" 
+                    name='newpassword' 
+                    placeholder='Enter new password' 
+                    type="password"
+                    value={newPassword}
+                    onChange={(e)=>setNewPassworde(e.target.value)}
+                    required/>
+                {errField.passwordErr.length > 0 && <div className='error' >{errField.passwordErr}</div>}
 
-          <label>Enter new password</label>
-          <input
-            className="inputReset"
-            id="newpassword"
-            key="newpassword"
-            name="newpassword"
-            placeholder="Enter new password"
-            type="password"
-            value={inputField.newPassword}
-            onChange={handleChange}
-            required
-          />
-          {errField.passwordErr.length > 0 && (
-            <div className="error">{errField.passwordErr}</div>
-          )}
-
-          <label>Confirm new password</label>
-          <input
-            className="inputReset"
-            id="cpassword"
-            key="cpassword"
-            name="cpassword"
-            placeholder="Confirm new password"
-            type="password"
-            value={inputField.cPassword}
-            onChange={handleChange}
-            required
-          />
-          {errField.cPasswordErr.length > 0 && (
-            <div className="error">{errField.cPasswordErr}</div>
-          )}
-        </form>
-        <button type="button" onClick={UpdatePassword}>
-          Submit
-        </button>
-      </div>
+            
+                <label>Confirm new password</label>
+                <input 
+                    id='cpassword' 
+                    key="cpassword" 
+                    name='cpassword' 
+                    placeholder='Confirm new password' 
+                    type="password"
+                    value={cPassword}
+                    onChange={(e)=>setCPassword(e.target.value)}
+                    required/>
+                {errField.cPasswordErr.length > 0 && <div className='error' >{errField.cPasswordErr}</div>}
+            </form>
+            <button type='button' onClick={UpdatePassword} >Submit</button>
+        </div>
     </div>
-  );
+  )
 }
