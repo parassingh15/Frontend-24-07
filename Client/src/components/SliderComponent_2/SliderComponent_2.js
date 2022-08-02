@@ -8,6 +8,8 @@ import { Modal } from "@mantine/core";
 import { CardActionArea } from "@mui/material";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import AddToPlaylistModal from "../AddToPlaylistModal/AddToPlaylistModal";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from 'react-toastify';
 
 export default function SliderComponent_2() {
   const [opened, setOpened] = useState(false);
@@ -41,12 +43,26 @@ export default function SliderComponent_2() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        
 
-        document.getElementById(heart).classList.add("fa-solid");
-       // document.getElementById(heart).classList.remove("fa-solid");
-      });
+        //document.getElementById(heart).classList.add("fa-solid");
+        // document.getElementById(heart).classList.remove("fa-solid");
+      })
+      difftoast();
   }
 
+  const difftoast = () => {
+    
+    toast.success('Song Added to Liked Songs', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+  });
+}
   return (
     <div className="SliderComponent_2">
       <Modal
@@ -69,9 +85,9 @@ export default function SliderComponent_2() {
                 backgroundColor: "#485461",
                 backgroundImage:
                   "linear-gradient(315deg, #485461 0%, #28313b 74%)",
-                  width: '300px',
-                  marginLeft: 0,
-                  marginRight: 0,
+                width: "300px",
+                marginLeft: 0,
+                marginRight: 0,
               }}
             >
               <CardActionArea>
@@ -120,7 +136,7 @@ export default function SliderComponent_2() {
                   bottom: "15px",
                   fontSize: "30px",
                   right: "5px",
-                  color: "darkGrey"
+                  color: "darkGrey",
                 }}
                 onClick={() => {
                   setOpened(true);
@@ -139,4 +155,4 @@ export default function SliderComponent_2() {
       </div>
     </div>
   );
-}
+              }

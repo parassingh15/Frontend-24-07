@@ -7,6 +7,10 @@ import { Link, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 export default function NavbarBottom() {
   
   let navigate = useNavigate();
@@ -42,6 +46,20 @@ function deletePlaylist(id) {
       setPlaylist(newData);
     
     });
+    /* difftoast();
+  }
+
+  const difftoast = () => {
+    
+    toast.Success(`Playlist Deleted`, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+  }); */
 }
 
 

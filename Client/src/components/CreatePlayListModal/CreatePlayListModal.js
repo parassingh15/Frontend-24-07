@@ -5,6 +5,8 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import { useNavigate } from "react-router";
 import "./CreatePlayListModal.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CreatePlayListModal() {
   
@@ -13,7 +15,6 @@ export default function CreatePlayListModal() {
   let navigate = useNavigate();
 
   function CreatePlaylist() {
-    console.log("hello");
     fetch("https://muzixplaylist.herokuapp.com/api/createPlaylist", {
       method: "POST",
       headers: {
@@ -34,6 +35,20 @@ export default function CreatePlayListModal() {
       .catch((err) => {
         document.getElementById("alert").value = "Playlist already exists";
       });
+      difftoast();
+    }
+  
+    const difftoast = () => {
+      
+      toast.success(`"${PlayListName}"  Playlist Created`, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+    });
   }
 
   return (
@@ -58,6 +73,7 @@ export default function CreatePlayListModal() {
       >
         Create
       </Button>
+      {/* <ToastContainer/> */}
     </div>
   );
 }

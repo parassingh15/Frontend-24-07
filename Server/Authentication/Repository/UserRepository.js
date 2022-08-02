@@ -51,9 +51,9 @@ const SendMail = (email, hostname)=>{
     })
 }
 
-function GetUser(email){
+function GetUser(){
     return new Promise((resolve, reject) => {
-        UserModel.findOne({email: email}, (err, data) => {
+        UserModel.find({}, (err, data) => {
             if (!err) {
                 console.log(data)
                 resolve(data);

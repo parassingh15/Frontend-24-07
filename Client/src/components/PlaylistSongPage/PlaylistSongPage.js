@@ -27,6 +27,10 @@ import Typography from "@mui/material/Typography";
 
 import { useParams } from "react-router-dom";
 
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function PlaylistSongPage() {
   function millisToMinutesAndSeconds(millis) {
     var minutes = Math.floor(millis / 60000);
@@ -90,6 +94,20 @@ export default function PlaylistSongPage() {
             setPlaylist(data);
           })
       );
+      difftoast();
+    }
+  
+    const difftoast = () => {
+      
+      toast.success(`Song Deleted from Playlist`, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+    });
   }
 
   return (
@@ -218,6 +236,7 @@ export default function PlaylistSongPage() {
           </div>
         ))}
       </div>
+      <ToastContainer/>
     </div>
   );
 }

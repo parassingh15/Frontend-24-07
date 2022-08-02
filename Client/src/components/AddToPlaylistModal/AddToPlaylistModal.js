@@ -8,6 +8,8 @@ import SendIcon from '@mui/icons-material/Send';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AddToPlaylistModal(props) {
   const [playlistId, setPlaylistId] = React.useState("");
@@ -58,7 +60,21 @@ fetch('https://muzixplaylist.herokuapp.com/api/getPlaylist', {
       document.getElementById('alert').classList.remove("alert-box");
     
        });
- }
+       difftoast();
+      }
+    
+      const difftoast = () => {
+        
+        toast.success(`Song Added to playlist `, {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+      });
+    }
 
 
   return (
@@ -102,12 +118,13 @@ fetch('https://muzixplaylist.herokuapp.com/api/getPlaylist', {
       </Button>
 
       <div id="alert" className='alert-box'>
-        <Alert severity="success"
+        {/* <Alert severity="success"
         sx={{marginTop: '60px'}}>
         <AlertTitle>Success</AlertTitle>
          Playlist Created! — <strong>check it out!</strong>
-      </Alert>
+      </Alert> */}
         </div>
+        
     </div>
   );
 }

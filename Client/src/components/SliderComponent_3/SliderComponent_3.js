@@ -10,6 +10,8 @@ import { CardActionArea } from "@mui/material";
 import Login from "../../img/login.PNG";
 import AddToPlaylistModal from "../AddToPlaylistModal/AddToPlaylistModal";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function SliderComponent_2() {
   const [opened, setOpened] = useState(false);
@@ -45,10 +47,22 @@ export default function SliderComponent_2() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-
-        document.getElementById(heart).classList.add("fa-solid");
-      });
+      })
+  difftoast();
   }
+
+  const difftoast = () => {
+    
+    toast.success('Song Added to Liked Songs', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+  });
+}
 
   return (
     <div className="SliderComponent_2">
@@ -131,6 +145,7 @@ export default function SliderComponent_2() {
             </Card>
           </div>
         ))}
+        <ToastContainer/>
       </div>
     </div>
   );

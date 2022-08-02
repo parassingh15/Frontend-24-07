@@ -7,9 +7,13 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
+
 
 import "../SliderComponent_2/SliderComponent_2.css";
 import Card from "@mui/material/Card";
@@ -80,6 +84,20 @@ export default function LikedSongLists() {
             setLikedSong(data);
           })
       );
+      difftoast();
+    }
+  
+    const difftoast = () => {
+      
+      toast.success(`Song Deleted from Liked Songs`, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+    });
   }
 
   return (
@@ -141,6 +159,7 @@ export default function LikedSongLists() {
           </List>
         </div>
       ))}
+      <ToastContainer/>
     </div>
   );
 }
