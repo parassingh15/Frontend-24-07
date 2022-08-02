@@ -41,11 +41,11 @@ const PasswordReset = async (req, res)=>{
     if(data){
         let currentTime = new Date().getTime();
         let diff = data.expiresIn - currentTime;
-        if(diff < -5){
+        if(diff < 0){
             res.status(200).json({message: "OTP expired", success: false})
         }else{
             let user = await UserModel.findOne({email: req.body.email});
-            user.password = req.body.newPassword;
+            user.password = bcryptjs.hashSync(req.body.newPassword, 10);
             user.save();
             res.status(200).json({message: "Password Changed successfully", success: true})
         }
@@ -53,11 +53,6 @@ const PasswordReset = async (req, res)=>{
     else{
         res.status(200).json({message: "Invalid OTP", success: false})
     }
-    // repo.ResetPassword(req.body.email, req.body.password).then(data=>{
-    //     res.status(200).send(data);
-    // }).catch((data)=>{
-    //     res.send(data);
-    // })
 }
 
 const SendMail = (req, res)=>{
@@ -70,18 +65,5 @@ const SendMail = (req, res)=>{
 }
 
 
-function GetUser(req, res) {
-    repo.GetUser(req.body.email).then(data => {
-        console.log(data)
-        res.status(201).send(data);
-        
-    })
-    ;
-}
-  
 
-
-
-
-
-module.exports = { UserLogin, PasswordReset, SendMail, RegisterUser, GetUser }
+module.exports = { UserLogin, PasswordReset, SendMail, RegisterUser }
