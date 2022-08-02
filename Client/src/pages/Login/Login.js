@@ -165,9 +165,6 @@ export default function Login() {
         .getElementById("LoginAlertFailed")
         .classList.remove("loginFailedalertdisplay");
 
-
-      
-
       navigate(`/home/${email}`);
     } else {
       /* alert(

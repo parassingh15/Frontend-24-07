@@ -14,6 +14,31 @@ const DB_URI = "mongodb://127.0.0.1:27017/AuthDB";
 const cors = require("cors");
 const cookieParser = require('cookie-parser')
 
+const swaggerUI = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
+
+const options = {
+	definition: {
+		openapi: "3.0.0",
+		info: {
+			title: "Authentication API",
+			version: "1.0.0",
+			description: "All Auth API of Muzix App",
+		},
+		servers: [
+			{
+				url: "http://localhost:8000",
+			},
+		],
+	},
+	apis: ["./routes/*.js"],
+};
+
+const specs = swaggerJsDoc(options);
+
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
+
+
 app.use(cookieParser());
 app.use(cors());
 app.use(express.urlencoded({extended: false}));

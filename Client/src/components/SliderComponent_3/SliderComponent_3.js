@@ -145,7 +145,7 @@ export default function SliderComponent_2() {
             </Card>
           </div>
         ))}
-        <ToastContainer/>
+        
       </div>
     </div>
   );
