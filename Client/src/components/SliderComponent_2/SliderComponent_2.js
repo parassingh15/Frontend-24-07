@@ -74,7 +74,7 @@ export default function SliderComponent_2() {
         <AddToPlaylistModal SongList={SongData} Id={Id} />
       </Modal>
       <h2 className="SliderComponentHeading SongComponentHeading">
-        Top Artists
+      New Release Songs
       </h2>
       <div className="Sub-SliderComponent">
         {SongData?.map((track) => (

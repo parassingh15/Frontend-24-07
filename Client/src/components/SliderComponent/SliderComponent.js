@@ -22,7 +22,7 @@ export default function SliderComponent() {
   return (
     <div className="SliderComponent">
       <h2 className="SliderComponentHeading SongComponentHeading">
-        New Release Songs
+        Top Artists
       </h2>
       <div className="Sub-SliderComponent">
         {SongData.map((Song) => (
