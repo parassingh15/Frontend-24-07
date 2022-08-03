@@ -10,7 +10,7 @@ const passport = require("passport");
 const routes = require("./Routes/UserRoutes");
 const UserModel = require("./Model/UserModel");
 const { PassportAuth } = require("./Auth/auth");
-const DB_URI = "mongodb://127.0.0.1:27017/AuthDB";
+const DB_URI = "mongodb+srv://PrinceMargaret:whZqC2szDBhh5hGu@prince-cluster.pocnu.mongodb.net/AuthDB";
 const cors = require("cors");
 const cookieParser = require('cookie-parser')
 
