@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
+          {/* <Route path="/" element={<Login />} /> */}
           <Route path="/login" element={<Login />} />
           {/* <Route path="/" element={<Home />} /> */}
           <Route
@@ -22,7 +22,7 @@ function App() {
             element={<ResetPassword />}
           />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/home/:user" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/liked" element={<LikedSongs />} />

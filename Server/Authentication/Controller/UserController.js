@@ -10,16 +10,21 @@ function GenerateToken(user_id){
 
 const RegisterUser = async (req, res)=>{
     const {username, email, password} = req.body;
+    const findEmail = await UserModel.find({email})
+    console.log(findEmail.length);
+    if(findEmail.length){
+        return res.status(409).json({status: 409, message: "User already exists"})
+    }
     try {
         const user = await UserModel.signup(username, email, password)
 
         // create a token
         const token = GenerateToken(user._id)
 
-        res.status(200).json({email, token})
+        res.status(200).json({status: 200, email, token, message: "User registered successfully"})
         
     } catch (error) {
-        res.status(400).json({error: error.message})
+        res.status(400).json({status: 400, error: error.message})
     }
 }
 

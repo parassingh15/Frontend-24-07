@@ -14,8 +14,8 @@ export default function CreatePlayListModal() {
   
   let navigate = useNavigate();
 
-  function CreatePlaylist() {
-    fetch("https://muzixplaylist.herokuapp.com/api/createPlaylist", {
+  const CreatePlaylist = async() => {
+    await fetch("https://muzixplaylist.herokuapp.com/api/createPlaylist", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,9 +28,10 @@ export default function CreatePlayListModal() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setPlaylistData(data);
+        setPlayListName(data);
         document.getElementById("alert").classList.add("alert-appear");
         document.getElementById("alert").classList.remove("alert-box");
+        navigate("/")
       })
       .catch((err) => {
         document.getElementById("alert").value = "Playlist already exists";

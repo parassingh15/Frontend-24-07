@@ -1,35 +1,41 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./LandingTop.css";
-import cors from "cors";
-import axios from "axios";
+import { toast } from "react-toastify";
+import { useLogout } from '../../hooks/useLogout';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 export default function LandingTop() {
-  const email = useParams();
+  // const email = useParams();
+  // const [userData, setUserData] = useState([]);
+  const {logout} = useLogout();
+  const {user } = useAuthContext();
 
-  const [userData, setUserData] = useState([]);
+  // useEffect(() => {
+  //   const url = "http://localhost:8000/api/home";
 
-  useEffect(() => {
-    const url = "http://localhost:8000/api/home";
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(url);
+  //       const json = await response.json();
+  //       console.log(json);
+  //       setUserData(json);
+  //     } catch (error) {
+  //       console.log("error", error);
+  //     }
+  //   };
 
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url);
-        const json = await response.json();
-        console.log(json);
-        setUserData(json);
-      } catch (error) {
-        console.log("error", error);
-      }
-    };
+  //   fetchData();
+  // }, []);
 
-    fetchData();
-  }, []);
-
-  let user ;
-  user = userData.find(({item})=>{ item.email === {email}});
-  console.log(user)
+  // let user ;
+  // user = userData.find(({item})=>{ item.email === {email}});
+  // console.log(user)
   /* console.log(`data is: ${resp.Data}`) */
+
+  const handleClick = ()=>{
+    logout();
+  }
 
   let navigate = useNavigate();
   const showSettings = () => {
@@ -44,14 +50,22 @@ export default function LandingTop() {
   return (
     <div className="LandingTop">
       <div className="details">
-        <div className="User" id="User" onClick={() => showSettings()}>
-          <h5>
-            <i className="LandingIcon fa-solid fa-user"></i>
-            Welcome, Paras Singh
-            <i className=" LandingIconDown fa-solid fa-caret-down"></i>
-          </h5>
-        </div>
-        <div className="optionsHidden" id="options">
+      {user ? 
+          <div className="User" id="User" onClick={() => showSettings()}>
+            <h5>
+              <i className="LandingIcon fa-solid fa-user"></i>
+              Welcome, {user.username}
+              <i className=" LandingIconDown fa-solid fa-caret-down"></i>
+            </h5>
+          </div> : 
+          <div className="User" id="User" onClick={()=>navigate("/login")}>
+            <h5>
+              <i className="LandingIcon fa-solid fa-user"></i>
+              Login
+            </h5>
+          </div>
+        }
+        {user && <div className="optionsHidden" id="options">
           <ul className="list-group list-group-flush">
             <li className="list-group-item">
               Settings <i className=" optionsIcons fa-solid fa-gear"></i>
@@ -60,12 +74,12 @@ export default function LandingTop() {
               Profile <i className=" optionsIcons  fa-solid fa-user"></i>
             </li>
 
-            <li className="list-group-item " onClick={() => navigate("/")}>
+            <li className="list-group-item " onClick={handleClick}>
               Log Out{" "}
               <i className=" optionsIcons  fa-solid fa-arrow-right-from-bracket"></i>
             </li>
           </ul>
-        </div>
+        </div>}
       </div>
     </div>
   );
