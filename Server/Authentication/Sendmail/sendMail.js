@@ -1,59 +1,21 @@
 const nodemailer = require('nodemailer');
 
 async function mail(OtpCode, receiver) {
-    //let account = await nodemailer.createTestAccount();
+    let account = await nodemailer.createTestAccount();
     const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'noreplymuzix@gmail.com',
-            pass: 'amoputxyrvrikexh',
-        },
-        logger: true
-    });
-    
-    var mailOptions = {
-        from: 'noreplymuzix@gmail.com',
-        to: receiver,
-        subject: 'Request for reset password',
-        text: `We have received a password change request from your account<br><br>This is your OTP.<br><br><h1>${OtpCode}</h1><br><br><p>Otp valid for only 5 minutes`,
-        html: `<b>We have received a password change request from your account<br><br>This is your OTP.<br><br><h1>${OtpCode}</h1><br><br><p>Otp valid for only 5 minutes</p></b>`,
-        
-    };
-
-    transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-      });
-    }
-
-    mail().catch((err)=>{
-        return false;
-    })
-    
-    module.exports = mail;
-
-
-/* const nodemailer = require('nodemailer');
-
-async function mail(OtpCode, receiver) {
-    //let account = await nodemailer.createTestAccount();
-    const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
+        host: 'smtp.ethereal.email',
         port: 587,
         secure: false,
         requireTLS: true,
         auth: {
-            user: 'noreplymuzix@gmail.com',
-            pass: 'MuzixApp@123',
+            user: account.user,
+            pass: account.pass,
         },
         logger: true
     });
     
     const info = await transporter.sendMail({
-        from: '"Muzix" <noreplymuzix@gmail.com>',
+        from: '"Sender Name" <from@example.net>',
         to: receiver,
         subject: "Hello from node",
         text: "Hello world?",
@@ -70,6 +32,4 @@ mail().catch((err)=>{
     return false;
 })
 
-module.exports = mail; */
-
-    
+module.exports = mail;

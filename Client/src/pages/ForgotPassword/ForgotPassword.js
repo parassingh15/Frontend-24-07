@@ -2,9 +2,6 @@ import React, {useState, useref} from 'react'
 import ResetPassword from "../ResetPassword/ResetPassword";
 import "./ForgotPassword.css";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 export default function ForgotPassword() {
     const [email, setEmail] = useState("");
     const [otpForm, setOtpForm] = useState("true");
@@ -12,6 +9,7 @@ export default function ForgotPassword() {
         console.log(e.target);
         setEmail(e.target.value);
     }
+
     const SendEmailforForgotPassword = async(e)=>{
         const res = await fetch("http://localhost:8000/api/forgotpassword", {
             method: "POST",
@@ -21,56 +19,19 @@ export default function ForgotPassword() {
             body:JSON.stringify({
                 email
             })
-        }).then(
-            data => data.json())
-        .then(data=> 
-           {if(data.message == 'User not found'){
-             
-                
-                
-                error(data.message, setOtpForm(true))
-                }
-            else{
-                 
-                 const msg = "OTP Sent to Email" 
-                 difftoast(msg, setOtpForm(false))
-                 
-            }})
-            
-            
+        });
+
+        const data = await res.json();
+        console.log(data)
+        if(data.success){
+            // naviagte("/password-sent-Page");
+            window.alert(data.message);
+            setOtpForm(false);
         }
-        
-        
-        
-
-        
-    const difftoast = (msg) => {
-        
-        toast.success(msg, {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-      });
+        else{
+            window.alert(data.message);
+        }
     }
-
-    const error = (msg) => {
-        
-        toast.error(msg, {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-      });
-    }
-
-    
   return (
     <div className='ForgotPassword'>
         {otpForm? <div className='input-container'>
@@ -95,7 +56,6 @@ export default function ForgotPassword() {
             </form>
             <button className='ForgotBtn' type='button' onClick={SendEmailforForgotPassword}>Submit</button>
         </div> : <ResetPassword email={email}/>}
-        <ToastContainer/>
     </div>
   )
 }

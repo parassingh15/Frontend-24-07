@@ -85,10 +85,9 @@ export default function ResetPassword(props) {
             Password Reset
         </div>
         <div className='input-container'>
-            <form className='resetForm' method='POST'>
+            <form method='POST'>
                 <label>Enter OTP Code</label>
                 <input 
-                    className='inputReset'
                     id='otpcode' 
                     key="otpcode" 
                     name='otpCode' 
@@ -102,7 +101,6 @@ export default function ResetPassword(props) {
             
                 <label>Enter new password</label>
                 <input 
-                    className='inputReset'
                     id='newpassword' 
                     key="newpassword" 
                     name='newpassword' 
@@ -116,7 +114,6 @@ export default function ResetPassword(props) {
             
                 <label>Confirm new password</label>
                 <input 
-                    className='inputReset'
                     id='cpassword' 
                     key="cpassword" 
                     name='cpassword' 

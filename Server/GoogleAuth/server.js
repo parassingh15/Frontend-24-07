@@ -22,7 +22,7 @@ app.get('/auth/google',
   passport.authenticate('google', { scope: [ 'email', 'profile' ] }
 ));
 
-const homePage = 'http://localhost:3000/'
+const homePage = 'http://localhost:3000/home'
 
 app.get( '/google/callback',
   passport.authenticate( 'google', {

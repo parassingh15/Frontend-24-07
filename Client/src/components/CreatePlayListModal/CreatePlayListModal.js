@@ -31,7 +31,7 @@ export default function CreatePlayListModal() {
         setPlayListName(data);
         document.getElementById("alert").classList.add("alert-appear");
         document.getElementById("alert").classList.remove("alert-box");
-        navigate(`/${PlayListName}`)
+        navigate("/")
       })
       .catch((err) => {
         document.getElementById("alert").value = "Playlist already exists";
