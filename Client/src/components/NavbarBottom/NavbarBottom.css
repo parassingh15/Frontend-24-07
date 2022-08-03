@@ -4,7 +4,6 @@
     flex-direction: column;
     margin-top: 20px;
     margin-left: 15px;
-
 }
 
 .NavIcon:hover{
@@ -12,12 +11,12 @@
 }
 .NavIcon{
     line-height: 30px;
-    font-family: 'Open Sans', sans-serif;
-    
+    font-family: 'Open Sans', sans-serif;   
 }
 .NavIcon>h4{
   cursor: pointer;
 }
+
 .LastLine{
     border: 0.2px solid white;
     width: 80%;
@@ -34,7 +33,6 @@
     background: -webkit-linear-gradient(rgb(202, 137, 237), rgb(55, 6, 234));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-  
   }
 
   .Playlists{
@@ -55,4 +53,12 @@
     cursor: pointer;
     float: right;
   }
+  
+
+  @media screen and (max-width: 750px) {
+    .NavbarBottom {
+    display: none;
+  }
+}
+
 

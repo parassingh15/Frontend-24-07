@@ -7,11 +7,12 @@ import './Home.css'
 export default function Home() {
   return (
     <div className='Home'>
+      
         <Navbar/>
         <LandingPage/>
-        <footer>
+        {/* <footer>
           <MusicControl/>
-        </footer>
+        </footer> */}
     </div>
   )
 }

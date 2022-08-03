@@ -10,9 +10,9 @@ export default function Playlist() {
     <div className='Playlist'>
         <Navbar/>
         <PlaylistPage/>
-        <footer>
+        {/* <footer>
           <MusicControl/>
-        </footer>
+        </footer> */}
         </div>
   )
 }
