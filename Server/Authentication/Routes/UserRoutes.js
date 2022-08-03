@@ -1,6 +1,6 @@
 const express = require("express");
 const passport = require("passport");
-const {RegisterUser, UserLogin, PasswordReset, SendMail, GetUser } = require("../Controller/UserController");
+const {RegisterUser, UserLogin, PasswordReset, SendMail } = require("../Controller/UserController");
 const router = express.Router();
 
 

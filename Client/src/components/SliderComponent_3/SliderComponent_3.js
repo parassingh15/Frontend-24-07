@@ -12,11 +12,13 @@ import AddToPlaylistModal from "../AddToPlaylistModal/AddToPlaylistModal";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {useAuthContext} from "../../hooks/useAuthContext"
 
 export default function SliderComponent_2() {
+  const {user} = useAuthContext()
   const [opened, setOpened] = useState(false);
   const [heart, setHeart] = useState(
-    "slider-component2_heart fa-regular fa-heart float-end text-end"
+    "slider-component2_heart fa-solid fa-heart float-end text-end"
   );
   const [SongData, setSongData] = React.useState([]);
   const [Id, setId] = useState("");
@@ -35,7 +37,8 @@ export default function SliderComponent_2() {
   }, []);
 
   function addLikedSong(track) {
-    fetch("https://likedapi.herokuapp.com/api/addLikedSong", {
+    if(user){
+      fetch("https://likedapi.herokuapp.com/api/addLikedSong", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +51,19 @@ export default function SliderComponent_2() {
       .then((data) => {
         console.log(data);
       })
-  difftoast();
+    difftoast();
+    }
+    if(!user){
+      toast.error('Please Log In', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
+    }
   }
 
   const difftoast = () => {
@@ -62,6 +77,24 @@ export default function SliderComponent_2() {
         draggable: true,
         progress: undefined,
   });
+}
+
+const handleClick1 = (track)=>{
+  if(!user){
+    toast.error('Please Log In', {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+  });
+  }
+  else{
+    setOpened(true);
+    setId(track.id);
+  }
 }
 
   return (
@@ -132,14 +165,13 @@ export default function SliderComponent_2() {
                   color: "darkGrey"
                 }}
                 onClick={() => {
-                  setOpened(true);
-                  setId(track.id);
+                  handleClick1(track);
                 }}
               />
 
               <i
                 id="heart"
-                class={`${heart}`}
+                className={`${heart}`}
                 onClick={addLikedSong.bind(this, track)}
               ></i>
             </Card>

@@ -7,7 +7,7 @@ export default function NavbarTop() {
   return (
     <div className="NavbarTop">
       <div className="NavIcon Homebtn">
-        <h4 onClick={() => navigate("/home")}>
+        <h4 onClick={() => navigate("/")}>
           
             <i className="navTop-icon fa-solid fa-house-chimney"></i> Home
           

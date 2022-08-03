@@ -10,9 +10,11 @@ import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useFormik } from "formik";
+import {useLogin} from "../../hooks/useLogin"
 
 export default function Login() {
   const navigate = useNavigate();
+  const {login, isLoading, error} = useLogin()
 
   const [signUp, setSignUp] = useState({
     username: "",
@@ -51,12 +53,12 @@ export default function Login() {
       password: "",
       confirmPassword: "",
     },
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm }) => {
       const username = values.username;
       const email = values.email;
       const password = values.password;
 
-      const res = fetch(config.apiRegisterUrl, {
+      const res = await fetch(config.apiRegisterUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -67,7 +69,16 @@ export default function Login() {
           password,
         }),
       });
-      alert(`${username} registered`);
+     // alert(`${username} registered`);
+     const data = await res.json();
+     console.log(data)
+     if (data.status === 409) {
+       toastFailure(data.message)
+     } else if (data.status === 200) {
+       toastSuccess(data.message)
+     } else {
+       toastFailure(data.error)
+     }
     },
 
     validationSchema: yup.object().shape({
@@ -105,6 +116,28 @@ export default function Login() {
     }),
   });
 
+  const toastSuccess = (message)=>
+    toast.success(message, {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  
+  const toastFailure = (message)=>
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
   // connecting to backend
   const RegisterData = async (e) => {
     const { username, email, password } = signUp;
@@ -132,58 +165,62 @@ export default function Login() {
   };
 
   const UserLogin = async (e) => {
+    
     const { email, password } = loginUser;
+    await login(email, password);
 
-    const res = await fetch(config.apiLoginUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
+    // const { email, password } = loginUser;
 
-    const loginData = await res.json();
+    // const res = await fetch(config.apiLoginUrl, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     email,
+    //     password,
+    //   }),
+    // });
 
-    /* usernam = User.find(email); */
+    // const loginData = await res.json();
 
-    if (loginData.status === 200) {
-      /* window.alert("logged in successfully");
-      onClick = { signInButton }; */
-      document
-        .getElementById("LoginAlertSuccess")
-        .classList.remove("loginSuccessalert");
-      document
-        .getElementById("LoginAlertSuccess")
-        .classList.add("loginSuccessalertdisplay");
-      document
-        .getElementById("LoginAlertFailed")
-        .classList.add("loginFailedalert");
-      document
-        .getElementById("LoginAlertFailed")
-        .classList.remove("loginFailedalertdisplay");
+    // /* usernam = User.find(email); */
 
-      navigate(`/home/${email}`);
-    } else {
-      /* alert(
-        "You are not authorized. Please check your email and password."
-      ); */
-      document
-        .getElementById("LoginAlertFailed")
-        .classList.remove("loginFailedalert");
-      document
-        .getElementById("LoginAlertFailed")
-        .classList.add("loginFailedalertdisplay");
+    // if (loginData.status === 200) {
+    //   /* window.alert("logged in successfully");
+    //   onClick = { signInButton }; */
+    //   document
+    //     .getElementById("LoginAlertSuccess")
+    //     .classList.remove("loginSuccessalert");
+    //   document
+    //     .getElementById("LoginAlertSuccess")
+    //     .classList.add("loginSuccessalertdisplay");
+    //   document
+    //     .getElementById("LoginAlertFailed")
+    //     .classList.add("loginFailedalert");
+    //   document
+    //     .getElementById("LoginAlertFailed")
+    //     .classList.remove("loginFailedalertdisplay");
 
-      document
-        .getElementById("LoginAlertSuccess")
-        .classList.add("loginSuccessalert");
-      document
-        .getElementById("LoginAlertSuccess")
-        .classList.remove("loginSuccessalertdisplay");
-    }
+    //   navigate(`/home/${email}`);
+    // } else {
+    //   /* alert(
+    //     "You are not authorized. Please check your email and password."
+    //   ); */
+    //   document
+    //     .getElementById("LoginAlertFailed")
+    //     .classList.remove("loginFailedalert");
+    //   document
+    //     .getElementById("LoginAlertFailed")
+    //     .classList.add("loginFailedalertdisplay");
+
+    //   document
+    //     .getElementById("LoginAlertSuccess")
+    //     .classList.add("loginSuccessalert");
+    //   document
+    //     .getElementById("LoginAlertSuccess")
+    //     .classList.remove("loginSuccessalertdisplay");
+    // }
   };
 
   const signUpButton = () => {
@@ -209,15 +246,15 @@ export default function Login() {
       responseMsg === "already exist"
         ? "Email id already exist"
         : "Registration Successfull";
-    toast.success(popUpText, {
-      position: "top-center",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+        toast.success(popUpText, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
   };
 
   return (
@@ -274,7 +311,7 @@ export default function Login() {
               </Link>
             </div>
 
-            <button type="button" className="btn solid" onClick={UserLogin}>
+            <button type="button" className="btn solid" disabled={isLoading} onClick={UserLogin}>
               Login
             </button>
             <p className="social-text">Or Sign in with social Platforms</p>
@@ -401,7 +438,8 @@ export default function Login() {
             ) : null}
             <button
               type="submit"
-              className="btn solid" /* onClick={RegisterData} */
+              className="btn solid" 
+              /* onClick={RegisterData} */
             >
               Register
             </button>
