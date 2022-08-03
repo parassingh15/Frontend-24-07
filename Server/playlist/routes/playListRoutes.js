@@ -31,10 +31,8 @@ const {
  *           description: The book author
  *              ]
  *       example:
- *         _id: dzkgbj47bazfshbr442
- *         playlistName: My New Playlist
- *         song:
- *              [0: id: abuyzjcs3654fw, track: Save Your Tears]
+ *         {
+ * name: Playlists}
  */
 
 /**
@@ -59,6 +57,8 @@ const {
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/playlistSchema'
+ *          example: 
+ *                
  */
 router.get("/getPlaylist", getPlayLists);
 
@@ -132,6 +132,7 @@ router.post("/createPlaylist", createPlaylist);
  *               $ref: '#/components/schemas/playlistSchema'
  *       500:
  *         description: Some server error
+ *      
  */
 router.post("/addSongToPlaylist/:playlistId", AddSongToPlayList);
 
