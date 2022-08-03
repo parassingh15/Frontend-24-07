@@ -279,15 +279,20 @@ export default function Login() {
             </button>
             <p className="social-text">Or Sign in with social Platforms</p>
             <div className="social-media">
-              <a href="#" className="social-icon">
+              {/* <a href="#" className="social-icon">
                 <i className="fab fa-facebook-f"></i>
               </a>
               <a href="#" className="social-icon">
                 <i className="fab fa-twitter"></i>
-              </a>
-              <a href="#" className="social-icon">
-                <i className="fab fa-google"></i>
-              </a>
+              </a> */}
+              {/* <a href="/auth/google" className="social-icon"> */}
+              <form action="http://localhost:5000/auth/google" method="get">
+                {/* <i className="social-icon fab fa-google"></i> */}
+                <button type="submit" class="login-with-google-btn">
+                  Sign in with Google
+                </button>
+              </form>
+              {/* </a> */}
             </div>
           </form>
         </div>
@@ -400,7 +405,7 @@ export default function Login() {
             >
               Register
             </button>
-            <p className="social-text">Or Sign Up with social Platforms</p>
+            {/* <p className="social-text">Or Sign Up with social Platforms</p>
             <div className="social-media">
               <a href="#" className="social-icon">
                 <i className="fab fa-facebook-f"></i>
@@ -411,7 +416,7 @@ export default function Login() {
               <a href="#" className="social-icon">
                 <i className="fab fa-google"></i>
               </a>
-            </div>
+            </div> */}
           </form>
         </div>
       </div>
