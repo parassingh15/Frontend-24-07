@@ -26,7 +26,7 @@ const options = {
 		},
 		servers: [
 			{
-				url: "http://localhost:8000",
+				url: "http://localhost:7000",
 			},
 		],
 	},
@@ -43,7 +43,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use("/api", require('./routes/likedSongRoutes'));
 
-let port = process.env.PORT || 8000;
+let port = process.env.PORT || 7000;
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
 }
