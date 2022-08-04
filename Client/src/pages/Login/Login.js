@@ -3,18 +3,19 @@ import "./Login.css";
 import axios from "axios";
 import Alert from "@mui/material/Alert";
 import { Link, useHref, useNavigate } from "react-router-dom";
-import login from "../../img/login.PNG";
-import signup from "../../img/signup.png";
+import loginImg from "../../img/login.PNG";
+import MusicGirl from "../../img/MusicGirl.png";
+import signup from "../../img/Headphone_girl.png";
 import config from "../../config";
 import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useFormik } from "formik";
-import {useLogin} from "../../hooks/useLogin"
+import { useLogin } from "../../hooks/useLogin";
 
 export default function Login() {
   const navigate = useNavigate();
-  const {login, isLoading, error} = useLogin()
+  const { login, isLoading, error } = useLogin();
 
   const [signUp, setSignUp] = useState({
     username: "",
@@ -69,16 +70,16 @@ export default function Login() {
           password,
         }),
       });
-     // alert(`${username} registered`);
-     const data = await res.json();
-     console.log(data)
-     if (data.status === 409) {
-       toastFailure(data.message)
-     } else if (data.status === 200) {
-       toastSuccess(data.message)
-     } else {
-       toastFailure(data.error)
-     }
+      // alert(`${username} registered`);
+      const data = await res.json();
+      console.log(data);
+      if (data.status === 409) {
+        toastFailure(data.message);
+      } else if (data.status === 200) {
+        toastSuccess(data.message);
+      } else {
+        toastFailure(data.error);
+      }
     },
 
     validationSchema: yup.object().shape({
@@ -116,7 +117,7 @@ export default function Login() {
     }),
   });
 
-  const toastSuccess = (message)=>
+  const toastSuccess = (message) =>
     toast.success(message, {
       position: "top-center",
       autoClose: 1000,
@@ -126,8 +127,8 @@ export default function Login() {
       draggable: true,
       progress: undefined,
     });
-  
-  const toastFailure = (message)=>
+
+  const toastFailure = (message) =>
     toast.error(message, {
       position: "top-center",
       autoClose: 1000,
@@ -165,7 +166,6 @@ export default function Login() {
   };
 
   const UserLogin = async (e) => {
-    
     const { email, password } = loginUser;
     await login(email, password);
 
@@ -246,15 +246,15 @@ export default function Login() {
       responseMsg === "already exist"
         ? "Email id already exist"
         : "Registration Successfull";
-        toast.success(popUpText, {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+    toast.success(popUpText, {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   };
 
   return (
@@ -305,13 +305,18 @@ export default function Login() {
               <Link
                 className="forgot-password-link"
                 to="/forgot-password"
-                style={{ color: "black" }}
+                style={{ color: "#123456", textDecoration: "none" }}
               >
                 Forgot your password?
               </Link>
             </div>
 
-            <button type="button" className="btn solid" disabled={isLoading} onClick={UserLogin}>
+            <button
+              type="button"
+              className="btn solid"
+              disabled={isLoading}
+              onClick={UserLogin}
+            >
               Login
             </button>
             <p className="social-text">Or Sign in with social Platforms</p>
@@ -438,7 +443,7 @@ export default function Login() {
             ) : null}
             <button
               type="submit"
-              className="btn solid" 
+              className="btn solid"
               /* onClick={RegisterData} */
             >
               Register
@@ -461,13 +466,8 @@ export default function Login() {
       <div className="panels-container">
         <div className="panel left-panel">
           <div className="content">
-            <h3>New Here?</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. vero sit
-              blanditiis? Maiores reiciendis, ea repudiandae delectus, dolorum
-              qui aspernatur odit perferendis doloribus corporis laboriosam
-              mollitia suscipit quia inventore quidem!
-            </p>
+            <h1>New Here?</h1>
+
             <button
               className="btn transparent"
               id="sign-up-button"
@@ -475,8 +475,10 @@ export default function Login() {
             >
               Sign Up
             </button>
+
+            <h2 style={{ marginTop: "50px" }}>Life is a song, Love is the music</h2>
           </div>
-          <img src={login} className="image" />
+          <img src={MusicGirl} className="image" />
         </div>
 
         <div className="panel right-panel" id="panel">
