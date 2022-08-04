@@ -11,7 +11,7 @@ import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 function App() {
   return (
-    <div className="App">
+    <div className="App" id="App">
       <BrowserRouter>
         <Routes>
           {/* <Route path="/" element={<Login />} /> */}
