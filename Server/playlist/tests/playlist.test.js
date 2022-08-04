@@ -16,7 +16,7 @@ describe('GET /api/getPlaylist',()=>{
 );
 describe('GET /api/getPlaylist/:id', ()=>{
     it('should return playlist by id',(done)=>{
-        request.get(url+'/api/getPlaylist/5e9f8f8f8f8f8f8f8f8f8f8',(err,res,body)=>{
+        request.get(url+'/api/getPlaylist/f21117be-16fa-4f82-afcf-3512f2b3f078',(err,res,body)=>{
             expect(res.statusCode).toBe(200);
             done();
         }
@@ -27,25 +27,8 @@ describe('GET /api/getPlaylist/:id', ()=>{
     );
 }
 );
-describe('POST /api/playlist',()=>{
-    it('should create playlist',  (done)=>{
-        request.post(url+'/api/playlist',{
-            form:{
-                name:"Playlist1",
-                songs:["5e9f8f8f8f8f8f8f8f8f8f8","5e9f8f8f8f8f8f8f8f8f8f8"]
-            }
-        },(err,res,body)=>{
-            expect(res.statusCode).toBe(200);
-            done();
-        }
-        )
-       
-        
-    }
-    );
-}
-);
-describe('PUT /api/playlist/:id',()=>{
+
+/*describe('PUT /api/playlist/:id',()=>{
     it('should update playlist',(done)=>{
         request.put(url+'/api/playlist/5e9f8f8f8f8f8f8f8f8f8f8',{
             form:{
@@ -63,7 +46,9 @@ describe('PUT /api/playlist/:id',()=>{
     }
     );
 }
-);
+);*/
+
+/*
 describe('DELETE /api/playlist/:id',()=>{
     it('should delete playlist',(done)=>{
         request.delete(url+'/api/playlist/5e9f8f8f8f8f8f8f8f8f8f8',(err,res,body)=>{
@@ -77,20 +62,8 @@ describe('DELETE /api/playlist/:id',()=>{
     );
 }
 );
-describe('GET /api/playlist/:id/songs',()=>{
-    it('should return songs of playlist',(done)=>{
-        request.get(url+'/api/playlist/5e9f8f8f8f8f8f8f8f8f8f8/songs',(err,res,body)=>{
-            expect(res.statusCode).toBe(200);
-            done();
-        }
-        )
-       
-        
-    }
-    );
-}
-);
 
+*/
 
 
 

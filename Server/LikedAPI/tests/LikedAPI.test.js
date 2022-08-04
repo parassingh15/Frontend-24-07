@@ -16,7 +16,7 @@ describe('GET /api/getLiked',()=>{
 }
 );
 
-describe('POST /api/liked',()=>{
+/*describe('POST /api/liked',()=>{
     it('should create liked',  (done)=>{
         request.post(url+'/api/liked',{
             form:{
@@ -48,4 +48,4 @@ describe('DELETE /api/liked/:id',()=>{
     );
 }
 );
-
+*/

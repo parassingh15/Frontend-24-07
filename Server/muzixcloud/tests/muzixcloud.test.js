@@ -2,7 +2,7 @@
 const   request=require('request');
 url='https://muzixcloud.herokuapp.com';
 
-
+/*
 describe('GET /api/getTrack',()=>{
     it('should return all tracks',(done)=>{
         request.get(url+'/api/getTrack',(err,res,body)=>{
@@ -16,6 +16,7 @@ describe('GET /api/getTrack',()=>{
     );
 }
 );
+*/
 
 ///GetTopArtist
 describe('GET /api/GetTopArtist',()=>{
